@@ -52,7 +52,7 @@ public class FileManager {
                         y = Integer.parseInt(colWarehouse[1]);
                         capacityVehicles = Integer.parseInt(colWarehouse[3]);
                         warehouseNode = new Node(x,y);
-                        System.out.println("X:"+warehouseNode.getX()+"   Y:"+warehouseNode.getY()+"   CapacitàVeicolo:"+warehouseNode.getCapacityVehicles());
+                        System.out.println("X:"+warehouseNode.getX()+"   Y:"+warehouseNode.getY()+"   CapacitàVeicolo:");
                         break;
 
                     default:
