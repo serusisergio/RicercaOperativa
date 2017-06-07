@@ -6,10 +6,9 @@ parallela e sequenziale, per problemi di CVRP(simmetrici) con Linehaul e Backhau
 Vincoli aggiuntivi.
 1)Per ogni rotta : Prima si fanno le consegne(Linehaul), e poi si fanno i ritiri(Backhaul).
 2)Non possono esserci rotte con soli Backhaul.
-3)Il numero dei mezzi (k) richiesti nell'istanza deve essere rispettato. Modificate l'algoritmo C-W
-per risolvere questo problema
-2) Migliorare la soluzione con il local search di tipo Best Improvement. Usando mosse di tipo
-relocate e exchange
+3)Il numero dei mezzi (k) richiesti nell'istanza deve essere rispettato. Modificate l'algoritmo C-W per risolvere questo problema
+
+Migliorare la soluzione con il local search di tipo Best Improvement. Usando mosse di tiporelocate e exchange
 Scrivere una mappa strutturale per risolvere il dato problema (CVRPB). (Vi consiglio di farci vedere prima la mappa e dopo avuto il consenso da parte nostra, mettervi ad implementare il codice)
 Iterare per 10 volte i due Algoritmi a due fasi per ogni istanza e scegliere solo la migliore.
 
