@@ -7,5 +7,18 @@ public class Main {
         FileManager fm = new FileManager();
 
         Instance instance = fm.readInstance("A1");
+
+        System.out.println("Name instance: "+instance.getNameInstance());
+        System.out.println("Capacità veicoli: "+instance.getCapacityVehicles()+ "   Numero veicoli: "+instance.getNumberVehicles() +"   Numero clienti: "+instance.getNumberCustomers());
+        WarehouseNode warehouseNode = instance.getWarehouseNode();
+        System.out.println("Nodo Magazzino,  X: "+warehouseNode.getX() +"   Y: "+warehouseNode.getY());
+        System.out.println("\nNodi Clienti:");
+        for(ClientNode clientNode : instance.getClientNodeHashMap()){
+            if(clientNode.isDelivery()){
+                System.out.println("X: "+clientNode.getX()+"  Y: "+clientNode.getY()+"  Delivery: "+clientNode.getDelivery());
+            }else{
+                System.out.println("X: "+clientNode.getX()+"  Y: "+clientNode.getY()+"  Pick-up : "+clientNode.getPick_up());
+            }
+        }
     }
 }
