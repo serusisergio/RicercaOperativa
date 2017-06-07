@@ -12,16 +12,19 @@ per risolvere questo problema
 relocate e exchange
 Scrivere una mappa strutturale per risolvere il dato problema (CVRPB). (Vi consiglio di farci vedere prima la mappa e dopo avuto il consenso da parte nostra, mettervi ad implementare il codice)
 Iterare per 10 volte i due Algoritmi a due fasi per ogni istanza e scegliere solo la migliore.
+
 Algoritmo1:
 1) creare delle rotte iniziali usando il C&W (parallelo)
 2) fase di miglioramento best Relocate
 3) fase di miglioramento best Exchange
 4) ripetere il passo 1 e 2 e 3 per 10 volte e scegliere solo la soluzione migliore
+
 Algoritmo 2:
 1) creare delle rotte iniziali usando il C&W(Sequenziale)
 2) fase di miglioramento best Exchange
 3) fase di miglioramento best Relocate
 4) ripetere il passo 1 e 2 e 3 per 10 volte e scegliere solo la soluzione migliore
+
 per poter iterare gli algoritimi, la fase 1) non deve produrre sempre le stesse rotte iniziali
 Vincoli da rispettare :
 il mezzo non può superare la capacità di carico.
