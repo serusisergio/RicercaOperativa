@@ -10,7 +10,7 @@ public class FileManager {
     private int numberCustomers;
     private int numberVehicles;
     private int capacityVehicles;
-    private Node warehouseNode;
+    private WarehouseNode warehouseNode;
 
     FileManager(){
         numberCustomers  = 0;
@@ -51,8 +51,8 @@ public class FileManager {
                         x = Integer.parseInt(colWarehouse[0]);
                         y = Integer.parseInt(colWarehouse[1]);
                         capacityVehicles = Integer.parseInt(colWarehouse[3]);
-                        warehouseNode = new Node(x,y);
-                        System.out.println("X:"+warehouseNode.getX()+"   Y:"+warehouseNode.getY()+"   CapacitàVeicolo:");
+                        warehouseNode = new WarehouseNode(x,y,capacityVehicles);
+                        System.out.println("X:"+warehouseNode.getX()+"   Y:"+warehouseNode.getY()+"   CapacitàVeicolo:"+warehouseNode.getCapacityVehicles());
                         break;
 
                     default:

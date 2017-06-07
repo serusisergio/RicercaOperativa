@@ -6,7 +6,7 @@ public class WarehouseNode extends Node{
 
     WarehouseNode(int x,int y,int capacityVehicles){
         super(x,y);
-        this.capacityVehicles = capacityVehicles;
+        setCapacityVehicles(capacityVehicles);
     }
 
     public int getCapacityVehicles() {
