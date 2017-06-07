@@ -8,26 +8,28 @@ public class FileManager {
     private FileWriter fileWriter;
     private BufferedReader fileReader;
     private String SPLIT;
+    private File file;
 
 
     FileManager(){
         fileReader = null;
         fileWriter = null;
+        file       = null;
         SPLIT      = "   ";//il file è formattato con 3 tab
     }
 
 
+    //Questo metodo legge la singola instanza nameInstance
     public Instance readInstance(String nameInstance) {
         ArrayList<ClientNode> clientNodeArrayList = new ArrayList<ClientNode>();
         int numberCustomers  = 0;
         int numberVehicles   = 0;
         int capacityVehicles = 0;
         WarehouseNode warehouseNode = null;
-        Instance instance = null;
 
         try {
             String line;
-            fileReader = new BufferedReader(new FileReader(Settings.instancesPath+nameInstance+".txt"));
+            fileReader = new BufferedReader(new FileReader(Settings.instancesPath+nameInstance));
             int i=0;
             while ((line = fileReader.readLine()) != null) {
                 //System.out.println(line);
@@ -60,7 +62,6 @@ public class FileManager {
                         break;
 
                     default:
-
                         String[] colCustomer = line.split(SPLIT);
                         x = Integer.parseInt(colCustomer[0]);
                         y = Integer.parseInt(colCustomer[1]);
@@ -68,21 +69,14 @@ public class FileManager {
                         pick_up  = Integer.parseInt(colCustomer[3]);
                         ClientNode clientNode = new ClientNode(x,y,delivery,pick_up);
                         clientNodeArrayList.add(clientNode);
-                        /*
-                        if(clientNode.isDelivery()) {
-                            System.out.println("X:" + clientNode.getX() + "   Y:" + clientNode.getY() + "   Delivery:" + clientNode.getDelivery());
-                        }else{
-                            System.out.println("X:" + clientNode.getX() + "   Y:" + clientNode.getY() + "   Pick-up:" + clientNode.getPick_up());
-                        }
-                        */
                 }
                 i++;
             }
         }catch (FileNotFoundException e) {
             System.out.println("Error in FileReader!");
-            //e.printStackTrace();
+            e.printStackTrace();
         } catch (IOException e) {
-            //e.printStackTrace();
+            e.printStackTrace();
         } finally {
             try {
                 fileReader.close();
@@ -91,7 +85,25 @@ public class FileManager {
                 e.printStackTrace();
             }
         }
-        instance = new Instance(capacityVehicles,numberCustomers,numberVehicles,warehouseNode,nameInstance,clientNodeArrayList);
-        return instance;
+        return new Instance(capacityVehicles,numberCustomers,numberVehicles,warehouseNode,nameInstance,clientNodeArrayList);
+    }
+
+    //Questo metodo legge tutte le instanza e le carica su un ArrayList, restituendolo al chiamante
+    public ArrayList<Instance> readInstances() {
+        ArrayList<Instance> instances = new ArrayList<Instance>();
+
+        for(String nameInstance : getListNameInstance()){
+            instances.add(readInstance(nameInstance));
+        }
+        return instances;
+    }
+
+    /**
+     *
+     * @return A list contains the names of the instances
+     */
+    public String[] getListNameInstance(){
+        file = new File(Settings.instancesPath);
+        return file.list();
     }
 }
