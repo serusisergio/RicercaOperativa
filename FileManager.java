@@ -56,12 +56,18 @@ public class FileManager {
                         break;
 
                     default:
+
                         String[] colCustomer = line.split(SPLIT);
                         x = Integer.parseInt(colCustomer[0]);
                         y = Integer.parseInt(colCustomer[1]);
                         delivery = Integer.parseInt(colCustomer[2]);
                         pick_up  = Integer.parseInt(colCustomer[3]);
-                        System.out.println("X:"+x+"   Y:"+y+"   Delivery:"+delivery+"    Pick-up:"+pick_up);
+                        ClientNode clientNode = new ClientNode(x,y,delivery,pick_up);
+                        if(clientNode.isDelivery()) {
+                            System.out.println("X:" + clientNode.getX() + "   Y:" + clientNode.getY() + "   Delivery:" + clientNode.getDelivery());
+                        }else{
+                            System.out.println("X:" + clientNode.getX() + "   Y:" + clientNode.getY() + "   Pick-up:" + clientNode.getPick_up());
+                        }
                 }
                 i++;
             }
