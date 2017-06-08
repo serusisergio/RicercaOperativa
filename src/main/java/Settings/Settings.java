@@ -1,3 +1,5 @@
+package Settings;
+
 /**
  * Created by Sergio Serusi on 07/06/2017.
  */
@@ -5,7 +7,7 @@ public class Settings {
 
     private String instancesPath;
 
-    Settings(){
+    public Settings(){
         if(System.getProperty("os.name").contains("Windows")){
             setInstancesPath("Instances\\");
         }else{
@@ -17,7 +19,7 @@ public class Settings {
         return instancesPath;
     }
 
-    private void setInstancesPath(String instancesPath) {
+    protected void setInstancesPath(String instancesPath) {
         this.instancesPath = instancesPath;
     }
 }
