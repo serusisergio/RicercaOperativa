@@ -31,7 +31,7 @@ public class FileManager {
 
         try {
             String line;
-            fileReader = new BufferedReader(new FileReader(settings.getInstancesPath()+nameInstance));
+            fileReader = new BufferedReader(new FileReader(settings.instancesPath+nameInstance));
             int i=0;
             while ((line = fileReader.readLine()) != null) {
                 //System.out.println(line);
@@ -105,7 +105,7 @@ public class FileManager {
      * @return A list contains the names of the instances
      */
     public String[] getListNameInstance(){
-        file = new File(settings.getInstancesPath());
+        file = new File(settings.instancesPath);
         return file.list();
     }
 }
