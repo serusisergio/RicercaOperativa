@@ -1,3 +1,4 @@
+package Model;
 /**
  * Created by Sergio Serusi on 07/06/2017.
  */
@@ -14,7 +15,7 @@ public class Node {
         return x;
     }
 
-    private void setX(int x) {
+    protected void setX(int x) {
         this.x = x;
     }
 
@@ -22,7 +23,7 @@ public class Node {
         return y;
     }
 
-    private void setY(int y) {
+    protected void setY(int y) {
         this.y = y;
     }
 

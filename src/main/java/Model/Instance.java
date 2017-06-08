@@ -1,4 +1,7 @@
+package Model;
 import java.util.ArrayList;
+
+
 
 /**
  * Created by Sergio Serusi on 07/06/2017.
@@ -11,7 +14,7 @@ public class Instance {
     private String nameInstance  = "";
     private ArrayList<ClientNode> clientNodeHashMap;
 
-    Instance(int capacityVehicles,int numberCustomers,int numberVehicles,WarehouseNode warehouseNode,String nameInstance,ArrayList<ClientNode> clientNodeHashMap){
+    public Instance(int capacityVehicles, int numberCustomers, int numberVehicles, WarehouseNode warehouseNode, String nameInstance, ArrayList<ClientNode> clientNodeHashMap){
         setCapacityVehicles(capacityVehicles);
         setNumberCustomers(numberCustomers);
         setNumberVehicles(numberVehicles);
@@ -24,7 +27,7 @@ public class Instance {
         return capacityVehicles;
     }
 
-    private void setCapacityVehicles(int capacityVehicles) {
+    protected void setCapacityVehicles(int capacityVehicles) {
         this.capacityVehicles = capacityVehicles;
     }
 
@@ -32,7 +35,7 @@ public class Instance {
         return numberCustomers;
     }
 
-    private void setNumberCustomers(int numberCustomers) {
+    protected void setNumberCustomers(int numberCustomers) {
         this.numberCustomers = numberCustomers;
     }
 
@@ -40,7 +43,7 @@ public class Instance {
         return numberVehicles;
     }
 
-    private void setNumberVehicles(int numberVehicles) {
+    protected void setNumberVehicles(int numberVehicles) {
         this.numberVehicles = numberVehicles;
     }
 
@@ -48,7 +51,7 @@ public class Instance {
         return warehouseNode;
     }
 
-    private void setWarehouseNode(WarehouseNode warehouseNode) {
+    protected void setWarehouseNode(WarehouseNode warehouseNode) {
         this.warehouseNode = warehouseNode;
     }
 
@@ -56,7 +59,7 @@ public class Instance {
         return nameInstance;
     }
 
-    private void setNameInstance(String nameInstance) {
+    protected void setNameInstance(String nameInstance) {
         this.nameInstance = nameInstance;
     }
 
@@ -64,7 +67,7 @@ public class Instance {
         return clientNodeHashMap;
     }
 
-    private void setClientNodeHashMap(ArrayList<ClientNode> clientNodeHashMap) {
+    protected void setClientNodeHashMap(ArrayList<ClientNode> clientNodeHashMap) {
         this.clientNodeHashMap = clientNodeHashMap;
     }
 }

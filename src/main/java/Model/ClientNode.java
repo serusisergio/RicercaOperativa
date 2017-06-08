@@ -1,3 +1,5 @@
+package Model;
+
 /**
  * Created by Sergio Serusi on 07/06/2017.
  */
@@ -5,7 +7,7 @@ public class ClientNode extends Node{
     private int delivery = 0;
     private int pick_up  = 0;
 
-    ClientNode(int x,int y,int delivery, int pick_up){
+    public ClientNode(int x, int y, int delivery, int pick_up){
         super(x,y);
         setDelivery(delivery);
         setPick_up(pick_up);
@@ -15,7 +17,7 @@ public class ClientNode extends Node{
         return delivery;
     }
 
-    private void setDelivery(int delivery) {
+    protected void setDelivery(int delivery) {
         this.delivery = delivery;
     }
 
@@ -23,7 +25,7 @@ public class ClientNode extends Node{
         return pick_up;
     }
 
-    private void setPick_up(int pick_up) {
+    protected void setPick_up(int pick_up) {
         this.pick_up = pick_up;
     }
 

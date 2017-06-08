@@ -1,5 +1,11 @@
+package ResourcesManager;
+
+
 import java.io.*;
 import java.util.ArrayList;
+import Model.*;
+import Settings.*;
+
 
 /**
  * Created by Sergio Serusi on 07/06/2017.
@@ -12,7 +18,7 @@ public class FileManager {
     private Settings settings;
 
 
-    FileManager(){
+    public FileManager(){
         fileReader = null;
         fileWriter = null;
         file       = null;
