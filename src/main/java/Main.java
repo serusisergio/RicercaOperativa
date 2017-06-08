@@ -6,10 +6,10 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
         System.out.println("Implementazione dell’ algoritmo euristico di Clarke & Wright nelle sue versioni parallela e sequenziale\n");
-        FileManager fm = new FileManager();
+        FileManager fileManager = new FileManager();
 
         /*
-        Instance instance = fm.readInstance("A1.txt");
+        Instance instance = fileManager.readInstance("A1.txt");
 
         System.out.println("Name instance: "+instance.getNameInstance());
         System.out.println("Capacità veicoli: "+instance.getCapacityVehicles()+ "   Numero veicoli: "+instance.getNumberVehicles() +"   Numero clienti: "+instance.getNumberCustomers());
@@ -24,9 +24,7 @@ public class Main {
             }
         }
         */
-
-
-        for(Instance instance: fm.readInstances()){
+        for(Instance instance: fileManager.readInstances()){
             System.out.println("Name instance: "+instance.getNameInstance());
             System.out.println("Capacità veicoli: "+instance.getCapacityVehicles()+ "   Numero veicoli: "+instance.getNumberVehicles() +"   Numero clienti: "+instance.getNumberCustomers());
             WarehouseNode warehouseNode = instance.getWarehouseNode();
