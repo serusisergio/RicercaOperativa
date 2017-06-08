@@ -9,6 +9,7 @@ public class FileManager {
     private BufferedReader fileReader;
     private String SPLIT;
     private File file;
+    private Settings settings;
 
 
     FileManager(){
@@ -16,6 +17,7 @@ public class FileManager {
         fileWriter = null;
         file       = null;
         SPLIT      = "   ";//il file è formattato con 3 tab
+        settings   = new Settings();
     }
 
 
@@ -29,7 +31,7 @@ public class FileManager {
 
         try {
             String line;
-            fileReader = new BufferedReader(new FileReader(Settings.instancesPath+nameInstance));
+            fileReader = new BufferedReader(new FileReader(settings.getInstancesPath()+nameInstance));
             int i=0;
             while ((line = fileReader.readLine()) != null) {
                 //System.out.println(line);
@@ -103,7 +105,7 @@ public class FileManager {
      * @return A list contains the names of the instances
      */
     public String[] getListNameInstance(){
-        file = new File(Settings.instancesPath);
+        file = new File(settings.getInstancesPath());
         return file.list();
     }
 }
