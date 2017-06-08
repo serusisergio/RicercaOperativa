@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class MatrixDistance {
     private ArrayList<ClientNode> clientNodeArrayList;
     private WarehouseNode warehouseNode;
+    public int matrix [][];
 
     public MatrixDistance(ArrayList<ClientNode> clientNodeArrayList,WarehouseNode warehouseNode){
         this.clientNodeArrayList=clientNodeArrayList;
@@ -15,10 +16,13 @@ public class MatrixDistance {
     public ArrayList<ClientNode> getClientNodeArrayList() {
         return clientNodeArrayList;
     }
+
     public void getMatrix(){
         ArrayList<ClientNode> listClient=getClientNodeArrayList();
-        for (ClientNode client:listClient) {
+        for (int i = 0; i < listClient.size(); i++) {
+            for (int j = 0; j < listClient.size(); j++) {
 
+            }
         }
     }
 }
