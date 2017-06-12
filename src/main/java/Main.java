@@ -40,6 +40,9 @@ public class Main {
                 }
             }
             System.out.println("\n");
+            SavingsMatrix saving = new SavingsMatrix(instance.getNodesList(),instance.getWarehouseNode(), new DistanceMatrix(instance.getNodesList(),instance.getWarehouseNode()));
+            System.out.println("DIO PORCO   "+saving.getSortedSaving());
+            break;
         }
 
     }

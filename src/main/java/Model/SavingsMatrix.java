@@ -2,10 +2,7 @@ package Model;
 
 import javafx.util.Pair;
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -16,7 +13,7 @@ public class SavingsMatrix {
     private WarehouseNode warehouseNode;
     private DistanceMatrix distances;
 
-    public Map<Pair<Node, Node>, Double> savings;
+    public Map<Pair<Node, Node>, Double> savings = new HashMap<>();
 
 
     public SavingsMatrix(List<Node> nodes, WarehouseNode warehouseNode, DistanceMatrix distances) {

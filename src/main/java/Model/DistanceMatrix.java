@@ -3,6 +3,7 @@ package Model;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +13,7 @@ import java.util.Map;
 public class DistanceMatrix {
     private List<Node> nodes;
 
-    public Map<Pair<Node, Node>, Double> matrix;
+    public Map<Pair<Node, Node>, Double> matrix = new HashMap<>();
 
     public DistanceMatrix(List<Node> nodes, Node warehouse){
         this.nodes = nodes;
