@@ -5,21 +5,10 @@ package Settings;
  */
 public class Settings {
 
-    private String instancesPath;
+    public final String instancesPath = System.getProperty("os.name").contains("Windows") ? "Instances\\" : "Instances/";
 
     public Settings(){
-        if(System.getProperty("os.name").contains("Windows")){
-            setInstancesPath("Instances\\");
-        }else{
-            setInstancesPath("Instances/");
-        }
+
     }
 
-    public String getInstancesPath() {
-        return instancesPath;
-    }
-
-    protected void setInstancesPath(String instancesPath) {
-        this.instancesPath = instancesPath;
-    }
 }

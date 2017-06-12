@@ -29,7 +29,7 @@ public class FileManager {
 
     //Questo metodo legge la singola instanza nameInstance
     public Instance readInstance(String nameInstance) {
-        ArrayList<ClientNode> clientNodeArrayList = new ArrayList<ClientNode>();
+        ArrayList<DeliveryNode> deliveryNodeArrayList = new ArrayList<DeliveryNode>();
         int numberCustomers  = 0;
         int numberVehicles   = 0;
         int capacityVehicles = 0;
@@ -75,8 +75,8 @@ public class FileManager {
                         y = Integer.parseInt(colCustomer[1]);
                         delivery = Integer.parseInt(colCustomer[2]);
                         pick_up  = Integer.parseInt(colCustomer[3]);
-                        ClientNode clientNode = new ClientNode(x,y,delivery,pick_up);
-                        clientNodeArrayList.add(clientNode);
+                        DeliveryNode deliveryNode = new DeliveryNode(x,y,delivery,pick_up);
+                        deliveryNodeArrayList.add(deliveryNode);
                 }
                 i++;
             }
@@ -93,7 +93,7 @@ public class FileManager {
                 e.printStackTrace();
             }
         }
-        return new Instance(capacityVehicles,numberCustomers,numberVehicles,warehouseNode,nameInstance,clientNodeArrayList);
+        return new Instance(capacityVehicles,numberCustomers,numberVehicles,warehouseNode,nameInstance, deliveryNodeArrayList);
     }
 
     //Questo metodo legge tutte le instanza e le carica su un ArrayList, restituendolo al chiamante

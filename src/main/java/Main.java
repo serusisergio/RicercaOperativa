@@ -6,6 +6,7 @@ import Model.*;
  */
 public class Main {
     public static void main(String[] args) {
+
         System.out.println("Implementazione dell’ algoritmo euristico di Clarke & Wright nelle sue versioni parallela e sequenziale\n");
         FileManager fileManager = new FileManager();
 
@@ -17,11 +18,11 @@ public class Main {
         WarehouseNode warehouseNode = instance.getWarehouseNode();
         System.out.println("Nodo Magazzino,  X: "+warehouseNode.getX() +"   Y: "+warehouseNode.getY());
         System.out.println("\nNodi Clienti:");
-        for(ClientNode clientNode : instance.getClientNodeHashMap()){
+        for(DeliveryNode clientNode : instance.getDeliveryNodeHashMap()){
             if(clientNode.isDelivery()){
                 System.out.println("X: "+clientNode.getX()+"  Y: "+clientNode.getY()+"  Delivery: "+clientNode.getDelivery());
             }else{
-                System.out.println("X: "+clientNode.getX()+"  Y: "+clientNode.getY()+"  Pick-up : "+clientNode.getPick_up());
+                System.out.println("X: "+clientNode.getX()+"  Y: "+clientNode.getY()+"  Pick-up : "+clientNode.getPickup());
             }
         }
         */
@@ -31,11 +32,11 @@ public class Main {
             WarehouseNode warehouseNode = instance.getWarehouseNode();
             System.out.println("Nodo Magazzino,  X: "+warehouseNode.getX() +"   Y: "+warehouseNode.getY());
             System.out.println("\nNodi Clienti:");
-            for(ClientNode clientNode : instance.getClientNodeHashMap()) {
-                if (clientNode.isDelivery()) {
-                    System.out.println("X: " + clientNode.getX() + "  Y: " + clientNode.getY() + "  Delivery: " + clientNode.getDelivery());
+            for(Node node : instance.getDeliveryNodeHashMap()) {
+                if (node instanceof DeliveryNode) {
+                    System.out.println("X: " + node.getX() + "  Y: " + node.getY() + "  Delivery: " + ((DeliveryNode) node).getDelivery());
                 } else {
-                    System.out.println("X: " + clientNode.getX() + "  Y: " + clientNode.getY() + "  Pick-up : " + clientNode.getPick_up());
+                    System.out.println("X: " + node.getX() + "  Y: " + node.getY() + "  Pick-up : " + ((PickupNode) node).getPickup());
                 }
             }
             System.out.println("\n");

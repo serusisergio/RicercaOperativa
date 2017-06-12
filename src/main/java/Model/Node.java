@@ -2,7 +2,7 @@ package Model;
 /**
  * Created by Sergio Serusi on 07/06/2017.
  */
-public class Node {
+public abstract class Node {
     private int x = 0;
     private int y = 0;
 
