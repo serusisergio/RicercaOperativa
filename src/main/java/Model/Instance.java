@@ -12,15 +12,15 @@ public class Instance {
     private int numberVehicles   = 0;
     private WarehouseNode warehouseNode;
     private String nameInstance  = "";
-    private ArrayList<DeliveryNode> deliveryNodeHashMap;
+    private ArrayList<Node> nodesList;
 
-    public Instance(int capacityVehicles, int numberCustomers, int numberVehicles, WarehouseNode warehouseNode, String nameInstance, ArrayList<DeliveryNode> deliveryNodeHashMap){
+    public Instance(int capacityVehicles, int numberCustomers, int numberVehicles, WarehouseNode warehouseNode, String nameInstance, ArrayList<Node> nodesList){
         setCapacityVehicles(capacityVehicles);
         setNumberCustomers(numberCustomers);
         setNumberVehicles(numberVehicles);
         setWarehouseNode(warehouseNode);
         setNameInstance(nameInstance);
-        setDeliveryNodeHashMap(deliveryNodeHashMap);
+        setNodesList(nodesList);
     }
 
     public int getCapacityVehicles() {
@@ -63,11 +63,11 @@ public class Instance {
         this.nameInstance = nameInstance;
     }
 
-    public ArrayList<DeliveryNode> getDeliveryNodeHashMap() {
-        return deliveryNodeHashMap;
+    public ArrayList<Node> getNodesList() {
+        return nodesList;
     }
 
-    protected void setDeliveryNodeHashMap(ArrayList<DeliveryNode> deliveryNodeHashMap) {
-        this.deliveryNodeHashMap = deliveryNodeHashMap;
+    protected void setNodesList(ArrayList<Node> nodesList) {
+        this.nodesList = nodesList;
     }
 }

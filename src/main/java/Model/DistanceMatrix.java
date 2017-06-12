@@ -14,10 +14,9 @@ public class DistanceMatrix {
 
     public Map<Pair<Node, Node>, Double> matrix;
 
-    public ArrayList<Node> puList;
-
-    public DistanceMatrix(List<Node> nodes){
+    public DistanceMatrix(List<Node> nodes, Node warehouse){
         this.nodes = nodes;
+        this.nodes.add(warehouse);
         calculateMatrix();
     }
 

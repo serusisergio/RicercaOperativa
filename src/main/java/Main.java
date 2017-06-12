@@ -18,7 +18,7 @@ public class Main {
         WarehouseNode warehouseNode = instance.getWarehouseNode();
         System.out.println("Nodo Magazzino,  X: "+warehouseNode.getX() +"   Y: "+warehouseNode.getY());
         System.out.println("\nNodi Clienti:");
-        for(DeliveryNode clientNode : instance.getDeliveryNodeHashMap()){
+        for(DeliveryNode clientNode : instance.getNodesList()){
             if(clientNode.isDelivery()){
                 System.out.println("X: "+clientNode.getX()+"  Y: "+clientNode.getY()+"  Delivery: "+clientNode.getDelivery());
             }else{
@@ -32,7 +32,7 @@ public class Main {
             WarehouseNode warehouseNode = instance.getWarehouseNode();
             System.out.println("Nodo Magazzino,  X: "+warehouseNode.getX() +"   Y: "+warehouseNode.getY());
             System.out.println("\nNodi Clienti:");
-            for(Node node : instance.getDeliveryNodeHashMap()) {
+            for(Node node : instance.getNodesList()) {
                 if (node instanceof DeliveryNode) {
                     System.out.println("X: " + node.getX() + "  Y: " + node.getY() + "  Delivery: " + ((DeliveryNode) node).getDelivery());
                 } else {
