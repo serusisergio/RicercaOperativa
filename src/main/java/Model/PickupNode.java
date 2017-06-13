@@ -3,11 +3,11 @@ package Model;
 /**
  * Created by stefano on 12/06/17.
  */
-public class PickupNode extends Node{
+public class PickupNode extends Node {
     private int pickup = 0;
 
-    public PickupNode(int x, int y, int pickup){
-        super(x,y);
+    public PickupNode(int x, int y, int id, int pickup) {
+        super(x, y, id);
         setPickup(pickup);
     }
 
@@ -38,5 +38,10 @@ public class PickupNode extends Node{
         result += 17 * super.getY();
 
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Delivery " + id + "(" + pickup + ")";
     }
 }

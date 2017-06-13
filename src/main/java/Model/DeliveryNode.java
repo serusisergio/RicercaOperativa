@@ -3,11 +3,11 @@ package Model;
 /**
  * Created by Sergio Serusi on 07/06/2017.
  */
-public class DeliveryNode extends Node{
+public class DeliveryNode extends Node {
     private int delivery = 0;
 
-    public DeliveryNode(int x, int y, int delivery){
-        super(x,y);
+    public DeliveryNode(int x, int y, int id, int delivery) {
+        super(x, y, id);
         setDelivery(delivery);
     }
 
@@ -37,5 +37,10 @@ public class DeliveryNode extends Node{
         result += 17 * super.getY();
 
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Delivery " + id + "(" + delivery + ")";
     }
 }

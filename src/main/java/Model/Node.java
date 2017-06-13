@@ -3,12 +3,14 @@ package Model;
  * Created by Sergio Serusi on 07/06/2017.
  */
 public abstract class Node {
-    private int x = 0;
-    private int y = 0;
+    protected int x = 0;
+    protected int y = 0;
+    protected int id;
 
-    public Node(int x, int y){
+    public Node(int x, int y, int id){
         setX(x);
         setY(y);
+        this.id = id;
     }
 
 
@@ -29,4 +31,5 @@ public abstract class Node {
         this.y = y;
     }
 
+    public int getId(){return id;}
 }

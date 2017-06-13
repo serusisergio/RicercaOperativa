@@ -29,7 +29,9 @@ public class SavingsMatrix {
             for (int j = 0; j < nodes.size(); j++) {
                 Node first = nodes.get(i);
                 Node second = nodes.get(j);
-                if (!first.equals(second)) {
+
+                //non metto coppie riflessive ne simmetriche
+                if (!first.equals(second) && !savings.containsKey(new Pair<>(nodes.get(j), nodes.get(i)))) {
                     double sav = distances.getDistance(first, warehouseNode) + distances.getDistance(warehouseNode, second) - distances.getDistance(first, second);
                     savings.put(new Pair<>(nodes.get(i), nodes.get(j)), sav);
                 }

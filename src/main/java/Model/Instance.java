@@ -7,15 +7,15 @@ import java.util.ArrayList;
  * Created by Sergio Serusi on 07/06/2017.
  */
 public class Instance {
-    private int capacityVehicles = 0;
+    private int vehiclesCapacity = 0;
     private int numberCustomers  = 0;
     private int numberVehicles   = 0;
     private WarehouseNode warehouseNode;
     private String nameInstance  = "";
     private ArrayList<Node> nodesList;
 
-    public Instance(int capacityVehicles, int numberCustomers, int numberVehicles, WarehouseNode warehouseNode, String nameInstance, ArrayList<Node> nodesList){
-        setCapacityVehicles(capacityVehicles);
+    public Instance(int vehiclesCapacity, int numberCustomers, int numberVehicles, WarehouseNode warehouseNode, String nameInstance, ArrayList<Node> nodesList){
+        setVehiclesCapacity(vehiclesCapacity);
         setNumberCustomers(numberCustomers);
         setNumberVehicles(numberVehicles);
         setWarehouseNode(warehouseNode);
@@ -23,12 +23,12 @@ public class Instance {
         setNodesList(nodesList);
     }
 
-    public int getCapacityVehicles() {
-        return capacityVehicles;
+    public int getVehiclesCapacity() {
+        return vehiclesCapacity;
     }
 
-    protected void setCapacityVehicles(int capacityVehicles) {
-        this.capacityVehicles = capacityVehicles;
+    protected void setVehiclesCapacity(int vehiclesCapacity) {
+        this.vehiclesCapacity = vehiclesCapacity;
     }
 
     public int getNumberCustomers() {

@@ -66,7 +66,7 @@ public class FileManager {
                         x = Integer.parseInt(colWarehouse[0]);
                         y = Integer.parseInt(colWarehouse[1]);
                         capacityVehicles = Integer.parseInt(colWarehouse[3]);
-                        warehouseNode = new WarehouseNode(x, y);
+                        warehouseNode = new WarehouseNode(x, y, i-3);
                         //System.out.println("X:"+warehouseNode.getX()+"   Y:"+warehouseNode.getY()+"   CapacitàVeicolo:");
                         break;
 
@@ -78,9 +78,9 @@ public class FileManager {
                         pickup = Integer.parseInt(colCustomer[3]);
 
                         if (delivery > 0) {
-                            nodesList.add(new DeliveryNode(x, y, delivery));
+                            nodesList.add(new DeliveryNode(x, y, i-3, delivery));
                         } else {
-                            nodesList.add(new PickupNode(x, y, pickup));
+                            nodesList.add(new PickupNode(x, y, i-3, pickup));
                         }
                 }
                 i++;

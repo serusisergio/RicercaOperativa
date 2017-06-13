@@ -1,5 +1,6 @@
 import ResourcesManager.FileManager;
 import Model.*;
+import Solver.ParallelClarkWright;
 
 /**
  * Created by Sergio Serusi on 07/06/2017.
@@ -14,7 +15,7 @@ public class Main {
         Instance instance = fileManager.readInstance("A1.txt");
 
         System.out.println("Name instance: "+instance.getNameInstance());
-        System.out.println("Capacità veicoli: "+instance.getCapacityVehicles()+ "   Numero veicoli: "+instance.getNumberVehicles() +"   Numero clienti: "+instance.getNumberCustomers());
+        System.out.println("Capacità veicoli: "+instance.getVehiclesCapacity()+ "   Numero veicoli: "+instance.getNumberVehicles() +"   Numero clienti: "+instance.getNumberCustomers());
         WarehouseNode warehouseNode = instance.getWarehouseNode();
         System.out.println("Nodo Magazzino,  X: "+warehouseNode.getX() +"   Y: "+warehouseNode.getY());
         System.out.println("\nNodi Clienti:");
@@ -30,7 +31,7 @@ public class Main {
 
         for(Instance instance: fileManager.readInstances()){
             System.out.println("Name instance: "+instance.getNameInstance());
-            System.out.println("Capacità veicoli: "+instance.getCapacityVehicles()+ "   Numero veicoli: "+instance.getNumberVehicles() +"   Numero clienti: "+instance.getNumberCustomers());
+            System.out.println("Capacità veicoli: "+instance.getVehiclesCapacity()+ "   Numero veicoli: "+instance.getNumberVehicles() +"   Numero clienti: "+instance.getNumberCustomers());
             WarehouseNode warehouseNode = instance.getWarehouseNode();
             System.out.println("Nodo Magazzino,  X: "+warehouseNode.getX() +"   Y: "+warehouseNode.getY());
             System.out.println("\nNodi Clienti:");
@@ -43,7 +44,11 @@ public class Main {
             }
             System.out.println("\n");
             SavingsMatrix saving = new SavingsMatrix(instance.getNodesList(),instance.getWarehouseNode(), new DistanceMatrix(instance.getNodesList(),instance.getWarehouseNode()));
-            System.out.println("SAVING "+saving.getSortedSaving());
+            //System.out.println("SAVING "+saving.getSortedSaving());
+
+            ParallelClarkWright pcw = new ParallelClarkWright(instance);
+
+
             break;
         }
 
