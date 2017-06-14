@@ -27,7 +27,7 @@ public class PickupNode extends Node {
 
         PickupNode that = (PickupNode) o;
 
-        return pickup == that.pickup && super.getX() == that.getX() && super.getY() == that.getY();
+        return pickup == that.pickup && super.getX() == that.getX() && super.getY() == that.getY() && super.getId() == that.getId();
     }
 
     @Override
@@ -42,6 +42,6 @@ public class PickupNode extends Node {
 
     @Override
     public String toString() {
-        return "Delivery " + id + "(" + pickup + ")";
+        return "Pickup " + id + "(" + pickup + ")";
     }
 }

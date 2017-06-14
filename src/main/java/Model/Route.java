@@ -40,7 +40,6 @@ public class Route {
 
     public void mergeEnd(Route r) {
 
-
         //check if the merge is allowed
         if(this.bhLoad + r.bhLoad > vehicleCapacity)
             throw new LoadExceededException();
@@ -71,6 +70,11 @@ public class Route {
         this.totalDistance -= distances.getDistance(newLast, last);
         this.totalDistance -= distances.getDistance(newFirst, first);
         this.totalDistance += newEdgeDistance;
+        this.totalDistance += r.totalDistance;
+
+        if(totalDistance < 0){
+            System.out.println("DIO");
+        }
 
         //aggiorno i carichi
         this.bhLoad += r.bhLoad;
@@ -103,5 +107,17 @@ public class Route {
     @Override
     public String toString(){
         return route.toString();
+    }
+
+    public double getTotalDistance() {
+        return totalDistance;
+    }
+
+    public int getBhLoad() {
+        return bhLoad;
+    }
+
+    public int getLhLoad() {
+        return lhLoad;
     }
 }

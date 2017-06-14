@@ -11,24 +11,16 @@ public class Main {
         System.out.println("Implementazione dell’ algoritmo euristico di Clarke & Wright nelle sue versioni parallela e sequenziale\n");
         FileManager fileManager = new FileManager();
 
-        /*
-        Instance instance = fileManager.readInstance("A1.txt");
 
-        System.out.println("Name instance: "+instance.getNameInstance());
-        System.out.println("Capacità veicoli: "+instance.getVehiclesCapacity()+ "   Numero veicoli: "+instance.getNumberVehicles() +"   Numero clienti: "+instance.getNumberCustomers());
-        WarehouseNode warehouseNode = instance.getWarehouseNode();
-        System.out.println("Nodo Magazzino,  X: "+warehouseNode.getX() +"   Y: "+warehouseNode.getY());
-        System.out.println("\nNodi Clienti:");
-        for(DeliveryNode clientNode : instance.getNodesList()){
-            if(clientNode.isDelivery()){
-                System.out.println("X: "+clientNode.getX()+"  Y: "+clientNode.getY()+"  Delivery: "+clientNode.getDelivery());
-            }else{
-                System.out.println("X: "+clientNode.getX()+"  Y: "+clientNode.getY()+"  Pick-up : "+clientNode.getPickup());
-            }
-        }
-        */
+        Instance instance = fileManager.readInstance("A4.txt");
+
+        ParallelClarkWright pcw = new ParallelClarkWright(instance);
+        System.out.println(pcw.getSolutionDetail());
 
 
+
+
+/*
         for(Instance instance: fileManager.readInstances()){
             System.out.println("Name instance: "+instance.getNameInstance());
             System.out.println("Capacità veicoli: "+instance.getVehiclesCapacity()+ "   Numero veicoli: "+instance.getNumberVehicles() +"   Numero clienti: "+instance.getNumberCustomers());
@@ -47,10 +39,11 @@ public class Main {
             //System.out.println("SAVING "+saving.getSortedSaving());
 
             ParallelClarkWright pcw = new ParallelClarkWright(instance);
+            System.out.println("Total Cost = " + pcw.getTotalCost());
 
 
             break;
         }
-
+*/
     }
 }

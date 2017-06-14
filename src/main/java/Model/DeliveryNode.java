@@ -26,7 +26,7 @@ public class DeliveryNode extends Node {
 
         DeliveryNode that = (DeliveryNode) o;
 
-        return delivery == that.delivery && super.getX() == that.getX() && super.getY() == that.getY();
+        return delivery == that.delivery && super.getX() == that.getX() && super.getY() == that.getY() && super.getId() == that.getId();
     }
 
     @Override
