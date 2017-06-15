@@ -1,6 +1,8 @@
 import ResourcesManager.FileManager;
 import Model.*;
+import Solver.ClarkWright;
 import Solver.ParallelClarkWright;
+import Solver.SequentialClarkWright;
 
 /**
  * Created by Sergio Serusi on 07/06/2017.
@@ -12,10 +14,13 @@ public class Main {
         FileManager fileManager = new FileManager();
 
 
-        Instance instance = fileManager.readInstance("A4.txt");
+        Instance instance = fileManager.readInstance("A1.txt");
 
-        ParallelClarkWright pcw = new ParallelClarkWright(instance);
+        ClarkWright pcw = new ParallelClarkWright(instance);
         System.out.println(pcw.getSolutionDetail());
+
+        ClarkWright scw = new SequentialClarkWright(instance);
+        System.out.println(scw.getSolutionDetail());
 
 
 

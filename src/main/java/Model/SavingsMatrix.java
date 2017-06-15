@@ -5,10 +5,16 @@ import javafx.util.Pair;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.google.common.collect.*;
+
+
 /**
  * Created by stefano on 12/06/17.
  */
 public class SavingsMatrix {
+
+    private final double OFFSET = 0.05;
+
     private List<Node> nodes;
     private WarehouseNode warehouseNode;
     private DistanceMatrix distances;
@@ -39,22 +45,18 @@ public class SavingsMatrix {
         }
     }
 
-    public Map<Pair<Node, Node>, Double> getSortedSaving(){
-        return sortByValue(savings);
-    }
-
-    /*
-    * Ordina mappa
-     */
-    private static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
-        return map.entrySet()
+    public List<Pair<Node, Node>> getSortedSaving() {
+        List<Pair<Node, Node>> ordered = savings.entrySet()
                 .stream()
                 .sorted(Map.Entry.comparingByValue(Collections.reverseOrder()))
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        Map.Entry::getValue,
-                        (e1, e2) -> e1,
-                        LinkedHashMap::new
-                ));
+                .map(pair -> pair.getKey())
+                .collect(Collectors.toList());
+
+        List<List<Pair<Node, Node>>> partitions = Lists.partition(ordered, (int) (ordered.size() * OFFSET));
+
+        partitions.forEach(partition ->  Collections.shuffle(partition));
+
+        return partitions.stream().flatMap(List::stream)
+                .collect(Collectors.toList());
     }
 }
