@@ -94,6 +94,10 @@ public abstract  class ClarkWright {
         return finalRoutes.stream().map(r -> r.getTotalDistance()).reduce(Double::sum).get();
     }
 
+    public SavingsMatrix getSavings(){
+        return savings;
+    }
+
     public List<Route> getFinalRoutes() {
         return finalRoutes;
     }

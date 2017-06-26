@@ -19,13 +19,13 @@ public class SavingsMatrix {
     private WarehouseNode warehouseNode;
     private DistanceMatrix distances;
 
-    public Map<Pair<Node, Node>, Double> savings = new HashMap<>();
+    private Map<Pair<Node, Node>, Double> savings = new HashMap<>();
 
 
     public SavingsMatrix(List<Node> nodes, WarehouseNode warehouseNode, DistanceMatrix distances) {
         this.nodes = nodes;
         this.warehouseNode = warehouseNode;
-        this.distances = distances;
+        this.setDistances(distances);
         calculateMatrix();
     }
 
@@ -37,16 +37,16 @@ public class SavingsMatrix {
                 Node second = nodes.get(j);
 
                 //non metto coppie riflessive ne simmetriche
-                if (!first.equals(second) && !savings.containsKey(new Pair<>(nodes.get(j), nodes.get(i)))) {
-                    double sav = distances.getDistance(first, warehouseNode) + distances.getDistance(warehouseNode, second) - distances.getDistance(first, second);
-                    savings.put(new Pair<>(nodes.get(i), nodes.get(j)), sav);
+                if (!first.equals(second) && !getSavings().containsKey(new Pair<>(nodes.get(j), nodes.get(i)))) {
+                    double sav = getDistances().getDistance(first, warehouseNode) + getDistances().getDistance(warehouseNode, second) - getDistances().getDistance(first, second);
+                    getSavings().put(new Pair<>(nodes.get(i), nodes.get(j)), sav);
                 }
             }
         }
     }
 
     public List<Pair<Node, Node>> getSortedSaving() {
-        List<Pair<Node, Node>> ordered = savings.entrySet()
+        List<Pair<Node, Node>> ordered = getSavings().entrySet()
                 .stream()
                 .sorted(Map.Entry.comparingByValue(Collections.reverseOrder()))
                 .map(pair -> pair.getKey())
@@ -59,4 +59,18 @@ public class SavingsMatrix {
         return partitions.stream().flatMap(List::stream)
                 .collect(Collectors.toList());
     }
+
+    public DistanceMatrix getDistances() {
+        return distances;
+    }
+
+    public void setDistances(DistanceMatrix distances) {
+        this.distances = distances;
+    }
+
+    public Map<Pair<Node, Node>, Double> getSavings() {
+        return savings;
+    }
+
+
 }

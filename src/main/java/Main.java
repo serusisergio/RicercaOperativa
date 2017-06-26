@@ -21,7 +21,7 @@ public class Main {
 
         ClarkWright scw = new SequentialClarkWright(instance);
         System.out.println(scw.getSolutionDetail());
-
+        BestExchange bestExchange = new BestExchange(scw);
 
 
 
