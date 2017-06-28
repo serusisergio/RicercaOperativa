@@ -18,22 +18,33 @@ public class BestExchange {
 
 
     void findBestExchange(){
-        Node b = null;
+        Route routeToChange;
         double value = 0;
-        for(Route routeA : cr.getFinalRoutes()){
+        for(Route routeA : cr.getFinalRoutes()){  //Ciclo principale che fissato il nodo cerco il miglior scambio con tutti gli altri
             for(Node a: routeA.getRoute()){
-                for (Route routeB : cr.getFinalRoutes()) {
-                    if (routeA != routeB) {//creare equals tra rotte
+                if(!(a instanceof WarehouseNode)) {
+                    for (Route routeB : cr.getFinalRoutes()) { //ciclo che uso per scorrere e quindi confrontre con tutti gli altri nodi delle altre root
 
-                        //se è la scelta migliore
-                        if (bestChoice.getValue() < value) {
-                            bestChoice = new BestChoice(a, b, value);
+                        if (routeA != routeB) {//creare equals tra rotte
+                            for (Node b : routeB.getRoute()) {
+                                if(!(b instanceof WarehouseNode)) {
+                                    //se è la scelta migliore
+                                    if (bestChoice.getValue() < value) {
+                                        bestChoice = new BestChoice(a, b, value);
+                                        routeToChange = routeB;
+                                    }
+                                }
+                            }
+
+
                         }
-
-
                     }
                 }
+
+
             }
+            //qui fai lo scambio
+
         }
     }
 }
