@@ -12,15 +12,8 @@ import java.util.List;
  * Created by Sergio Serusi on 21/06/2017.
  */
 public class BestExchange {
-    ClarkWright cr;
 
-    public BestExchange(ClarkWright cr) {
-        this.cr = cr;
-        findBestExchange();
-    }
-
-
-    void findBestExchange() {
+    public static void doBestExchanges(ClarkWright cr) {
 
         boolean exchangeDone;
 
@@ -67,7 +60,7 @@ public class BestExchange {
         } while (exchangeDone);
     }
 
-    private Choice checkExchange(Route routeA, Route routeB, Node a, Node b, Choice bestChoice) {
+    private static Choice checkExchange(Route routeA, Route routeB, Node a, Node b, Choice bestChoice) {
         double currentDelta = routeA.getExchangeDelta(a, b) + routeB.getExchangeDelta(b, a);
 
         //se è la scelta migliore
