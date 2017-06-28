@@ -1,11 +1,11 @@
-package ResourcesManager;
+package resourcesManager;
 
 
 import java.io.*;
 import java.util.ArrayList;
 
-import Model.*;
-import Settings.*;
+import settings.*;
+import core.model.*;
 
 
 /**

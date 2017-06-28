@@ -1,4 +1,7 @@
-package Model;
+package core.model;
+import core.model.Node;
+import core.model.WarehouseNode;
+
 import java.util.ArrayList;
 
 

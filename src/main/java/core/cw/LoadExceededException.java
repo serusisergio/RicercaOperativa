@@ -1,4 +1,4 @@
-package Model;
+package core.cw;
 
 /**
  * Created by stefano on 13/06/17.

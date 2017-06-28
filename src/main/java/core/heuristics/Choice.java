@@ -1,18 +1,22 @@
-package Model;
+package core.heuristics;
+
+import core.model.Node;
+import core.model.Route;
 
 /**
  * Created by Sergio Serusi on 21/06/2017.
  */
-public class BestChoice {
+public class Choice {
     private Node firstNode;
     private Node secondNode;
     private double value;
+    private Route routeToChange;
 
-    BestChoice(Node a, Node b, double value){
+    Choice(Node a, Node b, double value, Route r){
         setFirstNode(a);
         setSecondNode(b);
         setValue(value);
-
+        setRouteToChange(r);
     }
 
     public Node getFirstNode() {
@@ -37,5 +41,13 @@ public class BestChoice {
 
     public void setValue(double value) {
         this.value = value;
+    }
+
+    public Route getRouteToChange() {
+        return routeToChange;
+    }
+
+    public void setRouteToChange(Route routeToChange) {
+        this.routeToChange = routeToChange;
     }
 }

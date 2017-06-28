@@ -1,4 +1,4 @@
-package Model;
+package core.model;
 
 /**
  * Created by stefano on 12/06/17.

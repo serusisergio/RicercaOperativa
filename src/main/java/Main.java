@@ -1,8 +1,8 @@
-import ResourcesManager.FileManager;
-import Model.*;
-import Solver.ClarkWright;
-import Solver.ParallelClarkWright;
-import Solver.SequentialClarkWright;
+import core.heuristics.BestExchange;
+import resourcesManager.FileManager;
+import core.cw.ClarkWright;
+import core.cw.SequentialClarkWright;
+import core.model.Instance;
 
 /**
  * Created by Sergio Serusi on 07/06/2017.
@@ -14,14 +14,15 @@ public class Main {
         FileManager fileManager = new FileManager();
 
 
-        Instance instance = fileManager.readInstance("A1.txt");
+        Instance instance = fileManager.readInstance("N4.txt");
 
-        ClarkWright pcw = new ParallelClarkWright(instance);
-        System.out.println(pcw.getSolutionDetail());
+        //ClarkWright pcw = new ParallelClarkWright(instance);
+        //System.out.println(pcw.getSolutionDetail());
 
         ClarkWright scw = new SequentialClarkWright(instance);
         System.out.println(scw.getSolutionDetail());
         BestExchange bestExchange = new BestExchange(scw);
+        System.out.println(scw.getSolutionDetail());
 
 
 

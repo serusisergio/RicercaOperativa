@@ -1,8 +1,8 @@
-package Model;
+package core.cw;
 
+import core.model.Node;
 import javafx.util.Pair;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

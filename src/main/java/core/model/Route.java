@@ -1,8 +1,12 @@
-package Model;
+package core.model;
 
+
+import core.cw.DistanceMatrix;
+import core.cw.LoadExceededException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Sergio Serusi on 07/06/2017.
@@ -73,7 +77,7 @@ public class Route {
         this.totalDistance += r.totalDistance;
 
         if(totalDistance < 0){
-            System.out.println("DIO");
+            //System.out.println("DIO");
         }
 
         //aggiorno i carichi
@@ -120,4 +124,42 @@ public class Route {
     public int getLhLoad() {
         return lhLoad;
     }
+
+    public List<Node> getLHNodes(){
+        return this.route.stream().filter(a -> a instanceof DeliveryNode).collect(Collectors.toList());
+    }
+
+    public List<Node> getBHNodes(){
+        return this.route.stream().filter(a -> a instanceof PickupNode).collect(Collectors.toList());
+    }
+
+    public double getExchangeDelta(Node exitingNode, Node enteringNode){
+
+        int exitingPosition = this.route.indexOf(exitingNode);
+
+        if(exitingPosition == -1){
+            System.out.print("DIO");
+        }
+
+        Node pred = this.route.get(exitingPosition-1);
+        Node succ = this.route.get(exitingPosition+1);
+
+
+
+        return  - distances.getDistance(pred, exitingNode) - distances.getDistance(exitingNode, succ)
+                + distances.getDistance(pred, enteringNode) + distances.getDistance(enteringNode, succ);
+    }
+
+    public void exchangeNodes(Node exitingNode, Node enteringNode){
+
+        this.totalDistance += getExchangeDelta(exitingNode, enteringNode);
+
+        int exitingPosition = this.route.indexOf(exitingNode);
+
+        this.route.remove(exitingNode);
+        this.route.add(exitingPosition, enteringNode);
+
+
+    }
+
 }

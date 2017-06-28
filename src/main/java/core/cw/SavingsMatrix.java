@@ -1,5 +1,7 @@
-package Model;
+package core.cw;
 
+import core.model.Node;
+import core.model.WarehouseNode;
 import javafx.util.Pair;
 
 import java.util.*;
@@ -13,7 +15,7 @@ import com.google.common.collect.*;
  */
 public class SavingsMatrix {
 
-    private final double OFFSET = 0.05;
+    private final double OFFSET = 0.07;
 
     private List<Node> nodes;
     private WarehouseNode warehouseNode;
@@ -58,6 +60,7 @@ public class SavingsMatrix {
 
         return partitions.stream().flatMap(List::stream)
                 .collect(Collectors.toList());
+
     }
 
     public DistanceMatrix getDistances() {

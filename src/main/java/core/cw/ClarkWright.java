@@ -1,6 +1,6 @@
-package Solver;
+package core.cw;
 
-import Model.*;
+import core.model.*;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
