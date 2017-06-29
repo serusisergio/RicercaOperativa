@@ -144,7 +144,22 @@ public class Route {
         Node pred = this.route.get(exitingPosition-1);
         Node succ = this.route.get(exitingPosition+1);
 
+        //controlla i carichi
+        //se lo scambio fa superare il carico, restituisci MAX_INT
+        //in modo che non sia mai fatto
+        if (exitingNode instanceof DeliveryNode){
+            DeliveryNode delExitNode = (DeliveryNode) exitingNode;
+            DeliveryNode delEnterNode = (DeliveryNode) enteringNode;
 
+            if (lhLoad - delExitNode.getDelivery() + delEnterNode.getDelivery() > vehicleCapacity)
+                return Integer.MAX_VALUE;
+        } else {
+            PickupNode pickExitNode = (PickupNode) exitingNode;
+            PickupNode pickEnterNode = (PickupNode) enteringNode;
+
+            if (bhLoad - pickExitNode.getPickup() + pickEnterNode.getPickup() > vehicleCapacity)
+                return Integer.MAX_VALUE;
+        }
 
         return  - distances.getDistance(pred, exitingNode) - distances.getDistance(exitingNode, succ)
                 + distances.getDistance(pred, enteringNode) + distances.getDistance(enteringNode, succ);
