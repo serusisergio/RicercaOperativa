@@ -11,10 +11,18 @@ public class Choice {
     private Node secondNode;
     private double value;
     private Route routeToChange;
+    private int position;
 
-    Choice(Node a, Node b, double value, Route r){
+    public Choice(Node a, Node b, Route r, double value){
         setFirstNode(a);
         setSecondNode(b);
+        setValue(value);
+        setRouteToChange(r);
+    }
+
+    public Choice(Node a, int position, Route r, double value){
+        setFirstNode(a);
+        this.position = position;
         setValue(value);
         setRouteToChange(r);
     }
@@ -49,5 +57,9 @@ public class Choice {
 
     public void setRouteToChange(Route routeToChange) {
         this.routeToChange = routeToChange;
+    }
+
+    public int getPosition() {
+        return position;
     }
 }

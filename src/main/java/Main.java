@@ -1,4 +1,6 @@
+import core.cw.ParallelClarkWright;
 import core.heuristics.BestExchange;
+import core.heuristics.BestRelocate;
 import resourcesManager.FileManager;
 import core.cw.ClarkWright;
 import core.cw.SequentialClarkWright;
@@ -14,16 +16,14 @@ public class Main {
         FileManager fileManager = new FileManager();
 
 
-        Instance instance = fileManager.readInstance("N4.txt");
+        Instance instance = fileManager.readInstance("A2.txt");
 
-        //ClarkWright pcw = new ParallelClarkWright(instance);
+        ClarkWright pcw = new ParallelClarkWright(instance);
         //System.out.println(pcw.getSolutionDetail());
-
-        ClarkWright scw = new SequentialClarkWright(instance);
-        System.out.println(scw.getSolutionDetail());
-        BestExchange.doBestExchanges(scw);
-        System.out.println(scw.getSolutionDetail());
-
+        BestExchange.doBestExchanges(pcw);
+        System.out.println(pcw.getSolutionDetail());
+        BestRelocate.doBestRelocates(pcw);
+        System.out.println(pcw.getSolutionDetail());
 
 
 /*

@@ -117,11 +117,11 @@ public class Route {
         return totalDistance;
     }
 
-    public int getBhLoad() {
+    public int getBHLoad() {
         return bhLoad;
     }
 
-    public int getLhLoad() {
+    public int getLHLoad() {
         return lhLoad;
     }
 
@@ -136,10 +136,6 @@ public class Route {
     public double getExchangeDelta(Node exitingNode, Node enteringNode){
 
         int exitingPosition = this.route.indexOf(exitingNode);
-
-        if(exitingPosition == -1){
-            System.out.print("DIO");
-        }
 
         Node pred = this.route.get(exitingPosition-1);
         Node succ = this.route.get(exitingPosition+1);
@@ -171,9 +167,53 @@ public class Route {
 
         int exitingPosition = this.route.indexOf(exitingNode);
 
-        this.route.remove(exitingNode);
-        this.route.add(exitingPosition, enteringNode);
+        this.route.set(exitingPosition, enteringNode);
 
+
+    }
+
+    public double getNodeRemovalDelta(Node exitingNode){
+        int exitingPosition = this.route.indexOf(exitingNode);
+
+        Node pred = this.route.get(exitingPosition-1);
+        Node succ = this.route.get(exitingPosition+1);
+
+        return - distances.getDistance(pred, exitingNode) - distances.getDistance(exitingNode, succ)
+                + distances.getDistance(pred, succ);
+    }
+
+    public void removeNode(Node exitingNode){
+        this.totalDistance += getNodeRemovalDelta(exitingNode);
+        this.route.remove(exitingNode);
+    }
+
+    public double getNodeInsertionDelta(Node enteringNode, int position){
+        Node pred = this.route.get(position-1);
+        Node succ = this.route.get(position);
+
+        //controlla i carichi
+        //se l'inserimento fa superare il carico, restituisci MAX_INT
+        //in modo che non sia mai fatto
+        if (enteringNode instanceof DeliveryNode){
+            DeliveryNode delEnterNode = (DeliveryNode) enteringNode;
+
+            if (lhLoad + delEnterNode.getDelivery() > vehicleCapacity)
+                return Integer.MAX_VALUE;
+        } else {
+            PickupNode pickEnterNode = (PickupNode) enteringNode;
+
+            if (bhLoad + pickEnterNode.getPickup() > vehicleCapacity)
+                return Integer.MAX_VALUE;
+        }
+
+
+        return -distances.getDistance(pred, succ) + distances.getDistance(pred, enteringNode) + distances.getDistance(enteringNode, succ);
+    }
+
+    public void insertNode(Node enteringNode, int position){
+        this.totalDistance += getNodeInsertionDelta(enteringNode, position);
+
+        this.route.add(position, enteringNode);
 
     }
 

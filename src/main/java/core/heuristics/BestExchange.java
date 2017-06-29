@@ -66,10 +66,10 @@ public class BestExchange {
         //se è la scelta migliore
         if (bestChoice == null) {
             if (currentDelta < 0) {
-                bestChoice = new Choice(a, b, currentDelta, routeB);
+                bestChoice = new Choice(a, b, routeB, currentDelta);
             }
         } else if (bestChoice.getValue() > currentDelta) {
-            bestChoice = new Choice(a, b, currentDelta, routeB);
+            bestChoice = new Choice(a, b, routeB, currentDelta);
         }
 
         return bestChoice;

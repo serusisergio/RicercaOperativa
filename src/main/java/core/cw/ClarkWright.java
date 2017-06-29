@@ -121,8 +121,8 @@ public abstract  class ClarkWright {
             sb.append("\n");
             sb.append("\nROUTE ").append(i);
             sb.append("\nCost = ").append(r.getTotalDistance());
-            sb.append("\nDelivery Load = ").append(r.getLhLoad());
-            sb.append("\nPick-Up Load = ").append(r.getBhLoad());
+            sb.append("\nDelivery Load = ").append(r.getLHLoad());
+            sb.append("\nPick-Up Load = ").append(r.getBHLoad());
             sb.append("\nCustomers in Route = ").append(r.getRoute().size() - 2);
             sb.append("\nVertex Sequence :\n");
 
