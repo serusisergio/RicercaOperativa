@@ -12,6 +12,10 @@ import java.util.List;
  * Created by Sergio Serusi on 21/06/2017.
  */
 public class BestRelocate {
+
+    private static final double EPSILON = 0.000001;
+
+
     public static void doBestRelocates(ClarkWright cr) {
 
         boolean relocateDone;
@@ -36,7 +40,7 @@ public class BestRelocate {
 
                             for (Route routeB : cr.getFinalRoutes()) { //ciclo che uso per scorrere e quindi confrontre con tutti gli altri nodi delle altre root
 
-                                if (routeA != routeB) {//creare equals tra rotte
+                                //if (routeA != routeB) {//creare equals tra rotte
 
                                     List<Node> otherList;
                                     if (a instanceof DeliveryNode) {
@@ -47,12 +51,16 @@ public class BestRelocate {
                                     }
 
                                     //scorro tutte le posizioni nelle quali posso inserire il nodo a nella routeb
-
-                                    int start = routeB.getRoute().indexOf(otherList.get(0));
-                                    for (int position = start; position <= start + otherList.size(); position++) {
-                                        bestChoice = checkRelocate(routeA, routeB, a, position, bestChoice);
+                                    if(otherList.size() > 1){
+                                        //ottengo l'indice del primo Nodo della lista
+                                        int start = routeB.getRoute().indexOf(otherList.get(0));
+                                        //provo tutte le posizioni fino a quella successiva all'ultima posizione della lista
+                                        //(perche' potrei mettere il nodo in coda)
+                                        for (int position = start; position <= start + otherList.size(); position++) {
+                                            bestChoice = checkRelocate(routeA, routeB, a, position, bestChoice);
+                                        }
                                     }
-                                }
+                                //}
                             }
                         }
                         //qui fai lo scambio
@@ -75,10 +83,10 @@ public class BestRelocate {
 
         //se è la scelta migliore
         if (bestChoice == null) {
-            if (currentDelta < 0) {
+            if (currentDelta + EPSILON < 0) {
                 bestChoice = new Choice(a, position, routeB, currentDelta);
             }
-        } else if (bestChoice.getValue() > currentDelta) {
+        } else if (bestChoice.getValue() + EPSILON > currentDelta) {
             bestChoice = new Choice(a, position, routeB, currentDelta);
         }
 

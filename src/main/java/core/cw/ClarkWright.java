@@ -49,8 +49,8 @@ public abstract  class ClarkWright {
             }
         });
 
-        System.out.println("FINAL ROUTES");
-        System.out.println(finalRoutes);
+        //System.out.println("FINAL ROUTES");
+        //System.out.println(finalRoutes);
     }
 
     protected void mergeLeft(Pair<Node, Node> pair, List<Route> routes) {

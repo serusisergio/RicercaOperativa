@@ -16,14 +16,20 @@ public class Main {
         FileManager fileManager = new FileManager();
 
 
-        Instance instance = fileManager.readInstance("A2.txt");
+        Instance instance = fileManager.readInstance("A1.txt");
 
         ClarkWright pcw = new ParallelClarkWright(instance);
-        //System.out.println(pcw.getSolutionDetail());
+        System.out.println(pcw.getFinalRoutes());
+        System.out.println(pcw.getTotalCost());
+
         BestExchange.doBestExchanges(pcw);
-        System.out.println(pcw.getSolutionDetail());
+        System.out.println(pcw.getTotalCost());
+
         BestRelocate.doBestRelocates(pcw);
-        System.out.println(pcw.getSolutionDetail());
+        System.out.println(pcw.getTotalCost());
+
+        System.out.println(pcw.getFinalRoutes());
+
 
 
 /*
