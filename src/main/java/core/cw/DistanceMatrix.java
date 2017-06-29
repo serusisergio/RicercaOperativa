@@ -13,11 +13,14 @@ import java.util.Map;
 public class DistanceMatrix {
     private List<Node> nodes;
 
-    public Map<Pair<Node, Node>, Double> matrix = new HashMap<>();
+    private double matrix[][];
+
 
     public DistanceMatrix(List<Node> nodes, Node warehouse){
         this.nodes = nodes;
         this.nodes.add(warehouse);
+        this.matrix = new double[nodes.size()+1][nodes.size()+1];
+
         calculateMatrix();
     }
 
@@ -25,7 +28,7 @@ public class DistanceMatrix {
 
         for (int i = 0; i < nodes.size(); i++) {
             for (int j = 0; j < nodes.size(); j++) {
-                matrix.put(new Pair<>(nodes.get(i), nodes.get(j)), calculateDistance(nodes.get(i), nodes.get(j)));
+                matrix[nodes.get(i).getId()][nodes.get(j).getId()] = calculateDistance(nodes.get(i), nodes.get(j));
             }
         }
     }
@@ -35,6 +38,6 @@ public class DistanceMatrix {
     }
 
     public double getDistance(Node first, Node second){
-        return matrix.get(new Pair<>(first, second));
+        return matrix[first.getId()][second.getId()];
     }
 }
