@@ -156,7 +156,7 @@ public class BestExchange {
                 }
             }
             if (bestChoice != null) { //Fai lo scambio
-                System.out.println("Scambiando: "+bestChoice);
+                //System.out.println("Scambiando: "+bestChoice);
                 Route routeAchange = finalRoutes.get(bestChoice.getPositionRouteA());
                 Route routeBchange = finalRoutes.get(bestChoice.getPositionRouteB());
 
@@ -165,17 +165,42 @@ public class BestExchange {
                     finalRoutes.set(bestChoice.getPositionRouteA(),routeAchange);
 
                 }else{
+                    //System.out.println("Scambiando: "+bestChoice);
+
                     routeAchange.exchangeNodes(bestChoice.getFirstNode(),bestChoice.getSecondNode());
+                    //System.out.println("Routeeee: "+routeAchange);
+                    //checkValidity(routeAchange,cr);
+
                     routeBchange.exchangeNodes(bestChoice.getSecondNode(),bestChoice.getFirstNode());
+                    //checkValidity(routeBchange,cr);
 
                     finalRoutes.set(bestChoice.getPositionRouteA(),routeAchange);
                     finalRoutes.set(bestChoice.getPositionRouteB(),routeBchange);
                 }
 
 
+
             }
         }while(bestChoice != null);
         cr.setFinalRoutes(finalRoutes);
 
+    }
+
+    public static boolean checkValidity(Route rr, ClarkWright cw){
+        boolean flag= false;
+             int valueDelivery=0;
+            for(Node node: rr.getRoute()){
+                if(node instanceof DeliveryNode){
+                    valueDelivery += ((DeliveryNode) node).getDelivery();
+                }else{
+
+                }
+            }
+            if(valueDelivery>cw.getInstance().getVehiclesCapacity()){
+                System.out.println("La route supera Delivery, Route:");
+                flag = true;
+            }
+
+        return flag;
     }
 }

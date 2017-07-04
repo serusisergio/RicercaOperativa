@@ -19,7 +19,7 @@ public class Main {
         FileManager fileManager = new FileManager();
 
 
-        Instance instance = fileManager.readInstance("A1.txt");
+        Instance instance = fileManager.readInstance("N3.txt");
 
         ClarkWright pcw = new ParallelClarkWright(instance);
         if(checkValidity(pcw)){
@@ -102,12 +102,6 @@ public class Main {
                 System.out.println("La route supera Delivery, Route:"+i);
                 flag = true;
             }
-            i++;
-            /*
-            if(valuePick>valueDelivery){
-                System.out.println("La route scarica piu di quanto carica");
-                flag = true;
-            }*/
         }
         return flag;
     }

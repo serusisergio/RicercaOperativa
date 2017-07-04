@@ -150,7 +150,6 @@ public class Route {
                 DeliveryNode delEnterNode = (DeliveryNode) enteringNode;
 
                 if (lhLoad - delExitNode.getDelivery() + delEnterNode.getDelivery() > vehicleCapacity){
-                    //System.out.println("FuoriCarcio");
                     return Integer.MAX_VALUE;
                 }
             } else {
@@ -178,6 +177,10 @@ public class Route {
 
         this.totalDistance += getExchangeDelta(exitingNode, enteringNode);
 
+        if(exitingNode instanceof DeliveryNode){
+            lhLoad -= ((DeliveryNode) exitingNode).getDelivery();
+            lhLoad += ((DeliveryNode) enteringNode).getDelivery();
+        }
         int exitingPosition = this.route.indexOf(exitingNode);
 
         this.route.set(exitingPosition, enteringNode);
