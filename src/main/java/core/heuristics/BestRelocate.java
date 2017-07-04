@@ -20,6 +20,7 @@ public class BestRelocate {
 
         boolean relocateDone;
 
+        int z=0;
         do {
             relocateDone = false;
 
@@ -33,7 +34,7 @@ public class BestRelocate {
                     //routeA e' la rotta dal quale sto togliendo il nodo
                     //se il nodo e' di tipo Delivery ed e' l'unico
                     //non faccio scambi, per evitare di lasciare rotte con solo parte backhaul
-                    if (a instanceof DeliveryNode && routeA.getLHNodes().size() == 1) {
+                    if (a instanceof DeliveryNode && routeA.getLHNodes().size() > 1) {
                         Choice bestChoice = null;
 
                         if (!(a instanceof WarehouseNode)) {
@@ -56,7 +57,7 @@ public class BestRelocate {
                                         int start = routeB.getRoute().indexOf(otherList.get(0));
                                         //provo tutte le posizioni fino a quella successiva all'ultima posizione della lista
                                         //(perche' potrei mettere il nodo in coda)
-                                        for (int position = start; position <= start + otherList.size(); position++) {
+                                        for (int position = start; position <= otherList.size(); position++) {
                                             bestChoice = checkRelocate(routeA, routeB, a, position, bestChoice);
                                         }
                                     }
@@ -68,13 +69,14 @@ public class BestRelocate {
                             relocateDone = true;
 
                             routeA.removeNode(bestChoice.getFirstNode());
-                            bestChoice.getRouteToChange().insertNode(bestChoice.getFirstNode(), bestChoice.getPosition());
+                            bestChoice.getRouteToChange().insertNode(bestChoice.getFirstNode(), bestChoice.getPositionRouteA());
                         }
                     }
 
                 }
-
+                z++;
             }
+            if(z>2)break;
         } while (relocateDone);
     }
 

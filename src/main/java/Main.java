@@ -16,19 +16,26 @@ public class Main {
         FileManager fileManager = new FileManager();
 
 
-        Instance instance = fileManager.readInstance("A1.txt");
+        Instance instance = fileManager.readInstance("N4.txt");
 
         ClarkWright pcw = new ParallelClarkWright(instance);
         System.out.println(pcw.getFinalRoutes());
-        System.out.println(pcw.getTotalCost());
+        double initGain = pcw.getTotalCost();
+        System.out.println(initGain);
 
-        BestExchange.doBestExchanges(pcw);
-        System.out.println(pcw.getTotalCost());
-
-        BestRelocate.doBestRelocates(pcw);
-        System.out.println(pcw.getTotalCost());
+        BestExchange.doBestExchangesNew(pcw);
+        double endGain = pcw.getTotalCost();
+        System.out.println(endGain);
 
         System.out.println(pcw.getFinalRoutes());
+
+        System.out.println("Guadagno:"+(initGain-endGain));
+
+
+        //BestRelocate.doBestRelocates(pcw);
+        //System.out.println(pcw.getTotalCost());
+
+        //System.out.println(pcw.getFinalRoutes());
 
 
 

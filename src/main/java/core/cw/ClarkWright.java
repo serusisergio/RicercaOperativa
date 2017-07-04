@@ -173,4 +173,8 @@ public abstract  class ClarkWright {
         }
     }
 
+    public void setFinalRoutes(List<Route> finalRoutes){
+        this.finalRoutes = finalRoutes;
+    }
+
 }

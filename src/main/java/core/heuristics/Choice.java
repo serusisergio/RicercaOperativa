@@ -11,7 +11,9 @@ public class Choice {
     private Node secondNode;
     private double value;
     private Route routeToChange;
-    private int position;
+    private int positionRouteA;
+    private int positionRouteB;
+
 
     public Choice(Node a, Node b, Route r, double value){
         setFirstNode(a);
@@ -20,11 +22,21 @@ public class Choice {
         setRouteToChange(r);
     }
 
-    public Choice(Node a, int position, Route r, double value){
+    public Choice(Node a, int positionA, Route r, double value){
         setFirstNode(a);
-        this.position = position;
+        this.positionRouteA = positionA;
         setValue(value);
         setRouteToChange(r);
+    }
+
+    public Choice(Node a, Node b,int positionA,int positionB, Route r, double value){
+        setFirstNode(a);
+        setSecondNode(b);
+        setValue(value);
+        setRouteToChange(r);
+        this.positionRouteA = positionA;
+        this.setPositionRouteB(positionB);
+
     }
 
     public Node getFirstNode() {
@@ -59,7 +71,25 @@ public class Choice {
         this.routeToChange = routeToChange;
     }
 
-    public int getPosition() {
-        return position;
+    public int getPositionRouteA() {
+        return positionRouteA;
+    }
+
+    @Override
+    public String toString(){
+        String toSt = new String();
+        toSt+="    FirstNode: "+firstNode;
+        toSt+=("   SecondNode: "+secondNode);
+        toSt+=("   Value: "+value);
+        toSt+=("   RouteToChange: "+routeToChange);
+        return toSt;
+    }
+
+    public int getPositionRouteB() {
+        return positionRouteB;
+    }
+
+    public void setPositionRouteB(int positionRouteB) {
+        this.positionRouteB = positionRouteB;
     }
 }

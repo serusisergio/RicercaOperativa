@@ -136,6 +136,7 @@ public class Route {
     public double getExchangeDelta(Node exitingNode, Node enteringNode) {
 
         int exitingPosition = this.route.indexOf(exitingNode);
+        //System.out.println("Position "+exitingPosition+"   Existin:"+exitingNode);
 
         Node pred = this.route.get(exitingPosition - 1);
         Node succ = this.route.get(exitingPosition + 1);
@@ -162,9 +163,10 @@ public class Route {
                     + distances.getDistance(pred, enteringNode) + distances.getDistance(enteringNode, succ);
         } else {
             Node otherSucc = this.route.get(exitingPosition + 2);
-
-            return - distances.getDistance(pred, exitingNode) - distances.getDistance(exitingNode, enteringNode) - distances.getDistance(enteringNode, otherSucc)
+            double val= - distances.getDistance(pred, exitingNode) - distances.getDistance(exitingNode, enteringNode) - distances.getDistance(enteringNode, otherSucc)
                     + distances.getDistance(pred, enteringNode) + distances.getDistance(enteringNode, exitingNode) + distances.getDistance(exitingNode, otherSucc);
+            //System.out.println("Val:"+val);
+            return val;
         }
 
     }
