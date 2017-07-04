@@ -18,11 +18,11 @@ public class SequentialClarkWright extends ClarkWright {
     @Override
     protected void solveBH() {
         //ottengo solo i nodi di delivery
-        List<Node> bhNodes = instance.getNodesList().stream().filter(node -> node instanceof PickupNode).collect(Collectors.toList());
+        List<Node> bhNodes = getInstance().getNodesList().stream().filter(node -> node instanceof PickupNode).collect(Collectors.toList());
 
         //creo le rotte iniziali
         for (Node n : bhNodes) {
-            Route r = new Route(instance.getWarehouseNode(), n, distances, instance.getVehiclesCapacity());
+            Route r = new Route(getInstance().getWarehouseNode(), n, distances, getInstance().getVehiclesCapacity());
             bhRoutes.add(r);
         }
 
@@ -42,18 +42,18 @@ public class SequentialClarkWright extends ClarkWright {
     @Override
     protected void solveLH() {
         //ottengo solo i nodi di delivery
-        List<Node> lhNodes = instance.getNodesList().stream().filter(node -> node instanceof DeliveryNode).collect(Collectors.toList());
+        List<Node> lhNodes = getInstance().getNodesList().stream().filter(node -> node instanceof DeliveryNode).collect(Collectors.toList());
 
         //creo le rotte iniziali
         for (Node n : lhNodes) {
-            Route r = new Route(instance.getWarehouseNode(), n, distances, instance.getVehiclesCapacity());
+            Route r = new Route(getInstance().getWarehouseNode(), n, distances, getInstance().getVehiclesCapacity());
             lhRoutes.add(r);
         }
 
         List<Route> temp = new ArrayList<>(lhRoutes);
         lhRoutes.forEach(route ->
             savings.getSortedSaving().forEach(pair -> {
-                if (temp.size() > bhRoutes.size() && temp.size() > instance.getNumberVehicles()) {
+                if (temp.size() > bhRoutes.size() && temp.size() > getInstance().getNumberVehicles()) {
                     mergeRight(pair, temp);
                     mergeLeft(pair, temp);
                 }

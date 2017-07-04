@@ -1,10 +1,13 @@
 import core.cw.ParallelClarkWright;
 import core.heuristics.BestExchange;
 import core.heuristics.BestRelocate;
+import core.model.*;
 import resourcesManager.FileManager;
 import core.cw.ClarkWright;
 import core.cw.SequentialClarkWright;
-import core.model.Instance;
+
+import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Sergio Serusi on 07/06/2017.
@@ -16,20 +19,33 @@ public class Main {
         FileManager fileManager = new FileManager();
 
 
-        Instance instance = fileManager.readInstance("N4.txt");
+        Instance instance = fileManager.readInstance("A1.txt");
 
         ClarkWright pcw = new ParallelClarkWright(instance);
-        System.out.println(pcw.getFinalRoutes());
-        double initGain = pcw.getTotalCost();
-        System.out.println(initGain);
+        if(checkValidity(pcw)){
 
-        BestExchange.doBestExchangesNew(pcw);
-        double endGain = pcw.getTotalCost();
-        System.out.println(endGain);
+        }else {
+            System.out.println(pcw.getFinalRoutes());
+            double initGain = pcw.getTotalCost();
+            System.out.println(initGain);
 
-        System.out.println(pcw.getFinalRoutes());
+            BestExchange.doBestExchangesNew(pcw);
+            if(!checkValidity(pcw)){
+                double endGain = pcw.getTotalCost();
+                System.out.println(endGain);
 
-        System.out.println("Guadagno:"+(initGain-endGain));
+                System.out.println(pcw.getFinalRoutes());
+
+                System.out.println("Guadagno:" + (initGain - endGain));
+            }else{
+                System.out.println("DIO PORCOO");
+                System.out.println(pcw.getFinalRoutes());
+
+            }
+
+        }
+
+
 
 
         //BestRelocate.doBestRelocates(pcw);
@@ -64,5 +80,35 @@ public class Main {
             break;
         }
 */
+    }
+
+    public static boolean checkValidity(ClarkWright cw){
+        boolean flag= false;
+        List<Route> routeList = cw.getFinalRoutes();
+        int i=0;
+        for(Route route: routeList){
+            int valueDelivery=0;
+            int valuePick=0;
+            for(Node node: route.getRoute()){
+                if(node instanceof DeliveryNode){
+                    valueDelivery += ((DeliveryNode) node).getDelivery();
+                }else{
+                    if(node instanceof PickupNode){
+                        valuePick += ((PickupNode) node).getPickup();
+                    }
+                }
+            }
+            if(valueDelivery>cw.getInstance().getVehiclesCapacity()){
+                System.out.println("La route supera Delivery, Route:"+i);
+                flag = true;
+            }
+            i++;
+            /*
+            if(valuePick>valueDelivery){
+                System.out.println("La route scarica piu di quanto carica");
+                flag = true;
+            }*/
+        }
+        return flag;
     }
 }

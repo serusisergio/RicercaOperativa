@@ -149,8 +149,10 @@ public class Route {
                 DeliveryNode delExitNode = (DeliveryNode) exitingNode;
                 DeliveryNode delEnterNode = (DeliveryNode) enteringNode;
 
-                if (lhLoad - delExitNode.getDelivery() + delEnterNode.getDelivery() > vehicleCapacity)
+                if (lhLoad - delExitNode.getDelivery() + delEnterNode.getDelivery() > vehicleCapacity){
+                    //System.out.println("FuoriCarcio");
                     return Integer.MAX_VALUE;
+                }
             } else {
                 PickupNode pickExitNode = (PickupNode) exitingNode;
                 PickupNode pickEnterNode = (PickupNode) enteringNode;

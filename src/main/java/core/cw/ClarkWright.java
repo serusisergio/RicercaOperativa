@@ -10,16 +10,16 @@ import java.util.List;
  * Created by stefano on 15/06/17.
  */
 public abstract  class ClarkWright {
-    protected Instance instance;
+    private Instance instance;
     protected List<Route> bhRoutes, lhRoutes, finalRoutes;
     protected DistanceMatrix distances;
     protected SavingsMatrix savings;
 
     public ClarkWright(Instance i) {
-        this.instance = i;
+        this.setInstance(i);
 
-        distances = new DistanceMatrix(instance.getNodesList(), instance.getWarehouseNode());
-        savings = new SavingsMatrix(instance.getNodesList(), instance.getWarehouseNode(), distances);
+        distances = new DistanceMatrix(getInstance().getNodesList(), getInstance().getWarehouseNode());
+        savings = new SavingsMatrix(getInstance().getNodesList(), getInstance().getWarehouseNode(), distances);
 
         bhRoutes = new ArrayList<>();
         lhRoutes = new ArrayList<>();
@@ -105,11 +105,11 @@ public abstract  class ClarkWright {
     public String getSolutionDetail() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("Text File with Solution Of Problem: ").append(instance.getNameInstance());
+        sb.append("Text File with Solution Of Problem: ").append(getInstance().getNameInstance());
 
         sb.append("\n\nPROBLEM DETAILS");
-        sb.append("\nCustomers = ").append(instance.getNumberCustomers());
-        sb.append("\nMx Load = ").append(instance.getVehiclesCapacity());
+        sb.append("\nCustomers = ").append(getInstance().getNumberCustomers());
+        sb.append("\nMx Load = ").append(getInstance().getVehiclesCapacity());
         sb.append("\nMax Cost = 99999999999999");
 
         sb.append("\n\nSOLUTION DETAILS:");
@@ -177,4 +177,11 @@ public abstract  class ClarkWright {
         this.finalRoutes = finalRoutes;
     }
 
+    public Instance getInstance() {
+        return instance;
+    }
+
+    public void setInstance(Instance instance) {
+        this.instance = instance;
+    }
 }
