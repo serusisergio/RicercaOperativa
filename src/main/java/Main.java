@@ -22,7 +22,12 @@ public class Main {
         Instance instance = fileManager.readInstance("N3.txt");
 
         ClarkWright pcw = new ParallelClarkWright(instance);
-        if(checkValidity(pcw)){
+
+
+
+
+        if(!checkValidity(pcw)){
+            System.out.println("Errore sovraccarico rotte CW");
 
         }else {
             System.out.println(pcw.getFinalRoutes());
@@ -30,7 +35,7 @@ public class Main {
             System.out.println(initGain);
 
             BestExchange.doBestExchangesNew(pcw);
-            if(!checkValidity(pcw)){
+            if(checkValidity(pcw)){
                 double endGain = pcw.getTotalCost();
                 System.out.println(endGain);
 
@@ -38,9 +43,7 @@ public class Main {
 
                 System.out.println("Guadagno:" + (initGain - endGain));
             }else{
-                System.out.println("DIO PORCOO");
                 System.out.println(pcw.getFinalRoutes());
-
             }
 
         }
@@ -83,7 +86,7 @@ public class Main {
     }
 
     public static boolean checkValidity(ClarkWright cw){
-        boolean flag= false;
+        boolean flag= true;
         List<Route> routeList = cw.getFinalRoutes();
         int i=0;
         for(Route route: routeList){
@@ -100,7 +103,7 @@ public class Main {
             }
             if(valueDelivery>cw.getInstance().getVehiclesCapacity()){
                 System.out.println("La route supera Delivery, Route:"+i);
-                flag = true;
+                flag = false;
             }
         }
         return flag;
