@@ -247,7 +247,7 @@ public class Route {
     }
 
     public void insertNode(Node enteringNode, int position) {
-        this.totalDistance += getNodeInsertionDelta(enteringNode, position);
+        this.totalDistance += getNodeInsertionDelta(enteringNode, position); //forse va messo -
 
         if(enteringNode instanceof DeliveryNode){
             lhLoad += ((DeliveryNode) enteringNode).getDelivery();
