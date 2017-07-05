@@ -13,6 +13,7 @@ public class Choice {
     private Route routeToChange;
     private int positionRouteA;
     private int positionRouteB;
+    private int positionNodeB;
 
 
     public Choice(Node a, Node b, Route r, double value){
@@ -36,8 +37,18 @@ public class Choice {
         setRouteToChange(r);
         this.positionRouteA = positionA;
         this.setPositionRouteB(positionB);
-
     }
+
+    public Choice(Node a, Node b,int positionA,int positionB,int positionNodeB, Route r, double value){
+        setFirstNode(a);
+        setSecondNode(b);
+        setValue(value);
+        setRouteToChange(r);
+        this.positionRouteA = positionA;
+        this.setPositionRouteB(positionB);
+        this.setPositionNodeB(positionNodeB);
+    }
+
 
     public Node getFirstNode() {
         return firstNode;
@@ -91,5 +102,13 @@ public class Choice {
 
     public void setPositionRouteB(int positionRouteB) {
         this.positionRouteB = positionRouteB;
+    }
+
+    public int getPositionNodeB() {
+        return positionNodeB;
+    }
+
+    public void setPositionNodeB(int positionNodeB) {
+        this.positionNodeB = positionNodeB;
     }
 }

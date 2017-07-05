@@ -1,5 +1,6 @@
 import core.cw.ParallelClarkWright;
 import core.heuristics.BestExchange;
+import core.heuristics.BestRelocate;
 import core.model.*;
 import resourcesManager.FileManager;
 import core.cw.ClarkWright;
@@ -38,11 +39,22 @@ public class Main {
 
                 System.out.println(pcw.getFinalRoutes());
 
-                System.out.println("Guadagno:" + (initGain - endGain));
+                System.out.println("Guadagno da Exchange:" + (initGain - endGain));
             }else{
                 System.out.println(pcw.getFinalRoutes());
             }
 
+        }
+
+
+        double initGain = pcw.getTotalCost();
+        BestRelocate.doBestRelocatesNew(pcw);
+        if(pcw.checkValidity()){
+            double endGain = pcw.getTotalCost();
+            System.out.println("Guadagno da Relocate:" + (initGain - endGain));
+            System.out.println(pcw.getTotalCost());
+        }else{
+            System.out.println(pcw.getFinalRoutes());
         }
 
 

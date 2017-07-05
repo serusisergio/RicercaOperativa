@@ -211,8 +211,14 @@ public class Route {
                 + distances.getDistance(pred, succ);
     }
 
-    public void removeNode(Node exitingNode) {
+    public void removeNode(Node exitingNode) { //Aggioranre i carichi
         this.totalDistance += getNodeRemovalDelta(exitingNode);
+        if(exitingNode instanceof DeliveryNode){
+            lhLoad -= ((DeliveryNode) exitingNode).getDelivery();
+        } else if (exitingNode instanceof PickupNode){
+            bhLoad -= ((PickupNode) exitingNode).getPickup();
+        }
+
         this.route.remove(exitingNode);
     }
 
@@ -243,6 +249,11 @@ public class Route {
     public void insertNode(Node enteringNode, int position) {
         this.totalDistance += getNodeInsertionDelta(enteringNode, position);
 
+        if(enteringNode instanceof DeliveryNode){
+            lhLoad += ((DeliveryNode) enteringNode).getDelivery();
+        } else if (enteringNode instanceof PickupNode){
+            bhLoad += ((PickupNode) enteringNode).getPickup();
+        }
         this.route.add(position, enteringNode);
 
     }

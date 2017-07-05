@@ -56,7 +56,6 @@ public class BestExchange {
 
     public static void doBestExchanges(ClarkWright cr){
         List<Route> finalRoutes = cr.getFinalRoutes();
-
         Choice bestChoice = null;
         do {
             bestChoice = null;
