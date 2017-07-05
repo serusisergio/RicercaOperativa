@@ -1,13 +1,10 @@
 import core.cw.ParallelClarkWright;
 import core.heuristics.BestExchange;
-import core.heuristics.BestRelocate;
 import core.model.*;
 import resourcesManager.FileManager;
 import core.cw.ClarkWright;
-import core.cw.SequentialClarkWright;
 
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by Sergio Serusi on 07/06/2017.
@@ -19,14 +16,14 @@ public class Main {
         FileManager fileManager = new FileManager();
 
 
-        Instance instance = fileManager.readInstance("N3.txt");
+        Instance instance = fileManager.readInstance("N4.txt");
 
         ClarkWright pcw = new ParallelClarkWright(instance);
 
 
 
 
-        if(!checkValidity(pcw)){
+        if(!pcw.checkValidity()){
             System.out.println("Errore sovraccarico rotte CW");
 
         }else {
@@ -34,8 +31,8 @@ public class Main {
             double initGain = pcw.getTotalCost();
             System.out.println(initGain);
 
-            BestExchange.doBestExchangesNew(pcw);
-            if(checkValidity(pcw)){
+            BestExchange.doBestExchanges(pcw);
+            if(pcw.checkValidity()){
                 double endGain = pcw.getTotalCost();
                 System.out.println(endGain);
 
@@ -85,27 +82,5 @@ public class Main {
 */
     }
 
-    public static boolean checkValidity(ClarkWright cw){
-        boolean flag= true;
-        List<Route> routeList = cw.getFinalRoutes();
-        int i=0;
-        for(Route route: routeList){
-            int valueDelivery=0;
-            int valuePick=0;
-            for(Node node: route.getRoute()){
-                if(node instanceof DeliveryNode){
-                    valueDelivery += ((DeliveryNode) node).getDelivery();
-                }else{
-                    if(node instanceof PickupNode){
-                        valuePick += ((PickupNode) node).getPickup();
-                    }
-                }
-            }
-            if(valueDelivery>cw.getInstance().getVehiclesCapacity()){
-                System.out.println("La route supera Delivery, Route:"+i);
-                flag = false;
-            }
-        }
-        return flag;
-    }
+
 }

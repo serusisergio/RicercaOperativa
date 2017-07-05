@@ -180,7 +180,11 @@ public class Route {
         if(exitingNode instanceof DeliveryNode){
             lhLoad -= ((DeliveryNode) exitingNode).getDelivery();
             lhLoad += ((DeliveryNode) enteringNode).getDelivery();
+        } else if (exitingNode instanceof PickupNode){
+            bhLoad -= ((PickupNode) exitingNode).getPickup();
+            bhLoad += ((PickupNode) enteringNode).getPickup();
         }
+
         int exitingPosition = this.route.indexOf(exitingNode);
 
         this.route.set(exitingPosition, enteringNode);

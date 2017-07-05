@@ -184,4 +184,32 @@ public abstract  class ClarkWright {
     public void setInstance(Instance instance) {
         this.instance = instance;
     }
+
+    public boolean checkValidity(){
+        boolean flag= true;
+
+        int i=0;
+        for(Route route: finalRoutes){
+            int valueDelivery=0;
+            int valuePick=0;
+            for(Node node: route.getRoute()){
+                if(node instanceof DeliveryNode){
+                    valueDelivery += ((DeliveryNode) node).getDelivery();
+                }else{
+                    if(node instanceof PickupNode){
+                        valuePick += ((PickupNode) node).getPickup();
+                    }
+                }
+            }
+            if(valueDelivery>instance.getVehiclesCapacity()){
+                System.out.println("La parte LH supera il carico, Route:"+i);
+                flag = false;
+            }
+            if(valuePick>instance.getVehiclesCapacity()){
+                System.out.println("La parte BH route supera il carico, Route:"+i);
+                flag = false;
+            }
+        }
+        return flag;
+    }
 }

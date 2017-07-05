@@ -13,54 +13,6 @@ public class BestExchange {
 
     private static final double EPSILON = 0.01;
 
-
-    public static void doBestExchanges(ClarkWright cr) {
-
-        boolean exchangeDone;
-
-        do {
-            exchangeDone = false;
-
-            for (Route routeA : cr.getFinalRoutes()) {  //Ciclo principale che fissato il nodo cerco il miglior scambio con tutti gli altri
-                for (int i=0; i<routeA.getRoute().size(); i++) {
-
-                    Node a = routeA.getRoute().get(i);
-
-                    Choice bestChoice = null;
-                    if (!(a instanceof WarehouseNode)) {
-
-                        for (Route routeB : cr.getFinalRoutes()) { //ciclo che uso per scorrere e quindi confrontre con tutti gli altri nodi delle altre root
-
-                            if (routeA != routeB) {//creare equals tra rotte
-
-                                List<Node> otherList;
-                                if (a instanceof DeliveryNode) {
-                                    otherList = routeB.getLHNodes();
-                                } else {
-                                    //a è tipo Pickup
-                                    otherList = routeB.getBHNodes();
-                                }
-
-                                for (int j=0; j<otherList.size(); j++) {
-                                    Node b = otherList.get(j);
-                                    bestChoice = checkExchange(routeA, routeB,0,0, a, b, bestChoice);
-                                }
-                            }
-                        }
-                    }
-                    //qui fai lo scambio
-                    if (bestChoice != null) {
-                        exchangeDone = true;
-                        routeA.exchangeNodes(bestChoice.getFirstNode(), bestChoice.getSecondNode());
-                        bestChoice.getRouteToChange().exchangeNodes(bestChoice.getSecondNode(), bestChoice.getFirstNode());
-                    }
-
-                }
-
-            }
-        } while (exchangeDone);
-    }
-
     private static Choice checkExchange(Route routeA, Route routeB,int posA,int posB, Node a, Node b, Choice bestChoice) {
         //System.out.println("RouteA:"+routeA);
         //System.out.println("RouteB:"+routeB);
@@ -102,7 +54,7 @@ public class BestExchange {
     }
 
 
-    public static void doBestExchangesNew(ClarkWright cr){
+    public static void doBestExchanges(ClarkWright cr){
         List<Route> finalRoutes = cr.getFinalRoutes();
 
         Choice bestChoice = null;
@@ -121,33 +73,25 @@ public class BestExchange {
 
                         List<Node> nodeRouteB = routeB.getRoute();
 
+                        int y;
                         if (routeA == routeB) {
-                            for (int y = j + 1; y < nodeRouteB.size(); y++) { //Fai un caso specifico se la rotta è la stessa
-                                Node nodeB = nodeRouteB.get(y);
-                                if (nodeA instanceof DeliveryNode) {
-                                    if (nodeB instanceof DeliveryNode) {
-                                        bestChoice = checkExchange(routeA, routeB,i,x, nodeA, nodeB, bestChoice);
-                                    }
-                                } else {
-                                    if (nodeA instanceof PickupNode) {
-                                        if (nodeB instanceof PickupNode) {
-                                            bestChoice = checkExchange(routeA, routeB,i,x, nodeA, nodeB, bestChoice);
-                                        }
-                                    }
-                                }
-                            }
+                            //se la rotta è la stessa
+                            y=j+1;
                         } else {
-                            for (int y = 0; y < nodeRouteB.size(); y++) { //Se la rotta è diversa
-                                Node nodeB = nodeRouteB.get(y);
-                                if (nodeA instanceof DeliveryNode) {
-                                    if (nodeB instanceof DeliveryNode) {
+                            //se la rotta e' diversa guarda tutti i nodi
+                            y=0;
+                        }
+
+                        for (; y < nodeRouteB.size(); y++) {
+                            Node nodeB = nodeRouteB.get(y);
+                            if (nodeA instanceof DeliveryNode) {
+                                if (nodeB instanceof DeliveryNode) {
+                                    bestChoice = checkExchange(routeA, routeB,i,x, nodeA, nodeB, bestChoice);
+                                }
+                            } else {
+                                if (nodeA instanceof PickupNode) {
+                                    if (nodeB instanceof PickupNode) {
                                         bestChoice = checkExchange(routeA, routeB,i,x, nodeA, nodeB, bestChoice);
-                                    }
-                                } else {
-                                    if (nodeA instanceof PickupNode) {
-                                        if (nodeB instanceof PickupNode) {
-                                            bestChoice = checkExchange(routeA, routeB,i,x, nodeA, nodeB, bestChoice);
-                                        }
                                     }
                                 }
                             }
@@ -186,21 +130,4 @@ public class BestExchange {
 
     }
 
-    public static boolean checkValidity(Route rr, ClarkWright cw){
-        boolean flag= false;
-             int valueDelivery=0;
-            for(Node node: rr.getRoute()){
-                if(node instanceof DeliveryNode){
-                    valueDelivery += ((DeliveryNode) node).getDelivery();
-                }else{
-
-                }
-            }
-            if(valueDelivery>cw.getInstance().getVehiclesCapacity()){
-                System.out.println("La route supera Delivery, Route:");
-                flag = true;
-            }
-
-        return flag;
-    }
 }
