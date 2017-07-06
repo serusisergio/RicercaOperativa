@@ -83,4 +83,5 @@ public class Instance {
     public void setBestSolution(double bestSolution) {
         this.bestSolution = bestSolution;
     }
+
 }
