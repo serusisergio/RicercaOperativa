@@ -24,13 +24,13 @@ public class Main {
 
         Instance instance = fileManager.readInstance("N4.txt");
 
-        ClarkWright cw = getBestSolution(instance, true);
-        double ourBestSolution =cw.getTotalCost();
+        ClarkWright cw = getBestSolution(instance, false);
+        double ourBestSolution = cw.getTotalCost();
         double literatureBestSolution = cw.getInstance().getBestSolution();
 
-        System.out.println("Our Best Solution        : "+ourBestSolution);
-        System.out.println("Literature Best Solution : "+literatureBestSolution);
-        System.out.println("Relative %               : "+((ourBestSolution/literatureBestSolution)*100-100));
+        System.out.println("Our Best Solution        : " + ourBestSolution);
+        System.out.println("Literature Best Solution : " + literatureBestSolution);
+        System.out.println("Relative %               : " + ((ourBestSolution / literatureBestSolution) * 100 - 100));
 
 
 
@@ -117,22 +117,25 @@ public class Main {
         for (int i = 0; i < ITERATIONS; i++) {
             ClarkWright cw;
 
-            if(parallel)
-               cw = new ParallelClarkWright(instance);
-            else
+            if (parallel) {
+                cw = new ParallelClarkWright(instance);
+                BestRelocate.doBestRelocatesNew(cw);
+                BestExchange.doBestExchanges(cw);
+            } else {
                 cw = new SequentialClarkWright(instance);
+                BestExchange.doBestExchanges(cw);
+                BestRelocate.doBestRelocatesNew(cw);
+            }
 
-            BestExchange.doBestExchanges(cw);
-            BestRelocate.doBestRelocatesNew(cw);
 
-            if (cw.getTotalCost() < bestCost){
+            if (cw.getTotalCost() < bestCost) {
                 bestCost = cw.getTotalCost();
                 bestSolution = cw;
             }
         }
 
-        if(BENCHMARK)
-            System.out.println("Total execution time: " + (System.currentTimeMillis()-startTime)/1000.0);
+        if (BENCHMARK)
+            System.out.println("Total execution time: " + (System.currentTimeMillis() - startTime) / 1000.0);
 
         return bestSolution;
     }
