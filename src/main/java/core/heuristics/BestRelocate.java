@@ -61,16 +61,10 @@ public class BestRelocate {
             currentDelta = 0;
         }
         //se è la scelta migliore
-        if (bestChoice == null) {
-            if (currentDelta < 0) {
-                bestChoice = new Choice(routeA, routeB, a, position, currentDelta);
-            }
-        } else if (bestChoice.getValue() > currentDelta) {
-
+        if (bestChoice == null && currentDelta < 0 || bestChoice.getValue() > currentDelta) {
             bestChoice = new Choice(routeA, routeB, a, position, currentDelta);
-
-
         }
+
 
         return bestChoice;
     }
