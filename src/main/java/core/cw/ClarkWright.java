@@ -212,4 +212,8 @@ public abstract  class ClarkWright {
         }
         return flag;
     }
+
+    public double getSolutionMargin(){
+        return  getTotalCost() / instance.getBestSolution() * 100 - 100;
+    }
 }

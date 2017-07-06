@@ -1,9 +1,9 @@
 package core.model;
+
 import core.model.Node;
 import core.model.WarehouseNode;
 
 import java.util.ArrayList;
-
 
 
 /**
@@ -11,14 +11,14 @@ import java.util.ArrayList;
  */
 public class Instance {
     private int vehiclesCapacity = 0;
-    private int numberCustomers  = 0;
-    private int numberVehicles   = 0;
+    private int numberCustomers = 0;
+    private int numberVehicles = 0;
     private WarehouseNode warehouseNode;
-    private String nameInstance  = "";
+    private String nameInstance = "";
     private ArrayList<Node> nodesList;
     private double bestSolution = 0;
 
-    public Instance(int vehiclesCapacity, int numberCustomers, int numberVehicles, WarehouseNode warehouseNode, String nameInstance, ArrayList<Node> nodesList, double bestSolution){
+    public Instance(int vehiclesCapacity, int numberCustomers, int numberVehicles, WarehouseNode warehouseNode, String nameInstance, ArrayList<Node> nodesList, double bestSolution) {
         setVehiclesCapacity(vehiclesCapacity);
         setNumberCustomers(numberCustomers);
         setNumberVehicles(numberVehicles);
@@ -83,5 +83,4 @@ public class Instance {
     public void setBestSolution(double bestSolution) {
         this.bestSolution = bestSolution;
     }
-
 }

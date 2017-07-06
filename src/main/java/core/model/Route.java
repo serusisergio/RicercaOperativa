@@ -246,7 +246,9 @@ public class Route {
 
     }
 
-
+    public List<Node> getLHList(){
+        return route.stream().filter(n -> n instanceof DeliveryNode).collect(Collectors.toList());
+    }
 
 
 }

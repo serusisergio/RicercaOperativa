@@ -25,25 +25,28 @@ public class BestRelocate {
                 for (int j = 0; j < nodeRouteA.size(); j++) {
                     Node nodeA = nodeRouteA.get(j);
 
-                    //non faccio relocate sulla stessa rotta
-                    //parto dalla rotta successiva, poi riparto dall'inizio della lista (col modulo)
-                    //mi fermo quando ritorno alla rotta di partenza
-                    int start = (i + 1) % finalRoutes.size();
-                    for (int x = start; x != i; x = (x + 1) % finalRoutes.size()) {
-                        Route routeB = finalRoutes.get(x);
+                    //non faccio relocate di nodi delivery se la parte linehaul della rotta ha un solo nodo,
+                    //altrimenti potrebbero rimanere rotte con solo backhaul
+                    if (nodeA instanceof DeliveryNode && routeA.getLHList().size() > 1 || nodeA instanceof PickupNode) {
+                        //non faccio relocate sulla stessa rotta
+                        //parto dalla rotta successiva, poi riparto dall'inizio della lista (col modulo)
+                        //mi fermo quando ritorno alla rotta di partenza
+                        int start = (i + 1) % finalRoutes.size();
+                        for (int x = start; x != i; x = (x + 1) % finalRoutes.size()) {
+                            Route routeB = finalRoutes.get(x);
 
-                        List<Node> nodeRouteB = routeB.getRoute();
-                        for (int y = 0; y < nodeRouteB.size(); y++) {
-                            Node nodeB = nodeRouteB.get(y);
+                            List<Node> nodeRouteB = routeB.getRoute();
+                            for (int y = 0; y < nodeRouteB.size(); y++) {
+                                Node nodeB = nodeRouteB.get(y);
 
-                            //scarta le combinazioni con nodi di tipo diverso
-                            if (nodeA instanceof DeliveryNode && nodeB instanceof DeliveryNode || nodeA instanceof PickupNode && nodeB instanceof PickupNode) {
-                                bestChoice = checkRelocate(routeA, routeB, nodeA, y, bestChoice);
+                                //scarta le combinazioni con nodi di tipo diverso
+                                if (nodeA instanceof DeliveryNode && nodeB instanceof DeliveryNode || nodeA instanceof PickupNode && nodeB instanceof PickupNode) {
+                                    bestChoice = checkRelocate(routeA, routeB, nodeA, y, bestChoice);
+                                }
+
                             }
-
                         }
                     }
-
                 }
 
             }
