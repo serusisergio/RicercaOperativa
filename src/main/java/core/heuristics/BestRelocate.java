@@ -25,7 +25,11 @@ public class BestRelocate {
                 for (int j = 0; j < nodeRouteA.size(); j++) {
                     Node nodeA = nodeRouteA.get(j);
 
-                    for (int x = i + 1; x < finalRoutes.size(); x++) { //nn deve scambiare sulla stessa rotta
+                    //non faccio relocate sulla stessa rotta
+                    //parto dalla rotta successiva, poi riparto dall'inizio della lista (col modulo)
+                    //mi fermo quando ritorno alla rotta di partenza
+                    int start = (i + 1) % finalRoutes.size();
+                    for (int x = start; x != i; x = (x + 1) % finalRoutes.size()) {
                         Route routeB = finalRoutes.get(x);
 
                         List<Node> nodeRouteB = routeB.getRoute();
@@ -39,6 +43,7 @@ public class BestRelocate {
 
                         }
                     }
+
                 }
 
             }
