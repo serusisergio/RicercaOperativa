@@ -1,4 +1,5 @@
 import core.cw.ParallelClarkWright;
+import core.cw.SequentialClarkWright;
 import core.heuristics.BestExchange;
 import core.heuristics.BestRelocate;
 import core.model.*;
@@ -11,36 +12,43 @@ import java.util.List;
  * Created by Sergio Serusi on 07/06/2017.
  */
 public class Main {
+
+    private static final int ITERATIONS = 10;
+    private static final boolean BENCHMARK = true;
+
     public static void main(String[] args) {
 
         System.out.println("Implementazione dell’ algoritmo euristico di Clarke & Wright nelle sue versioni parallela e sequenziale\n");
         FileManager fileManager = new FileManager();
 
 
-        Instance instance = fileManager.readInstance("N4.txt");
+        Instance instance = fileManager.readInstance("A1.txt");
 
+        ClarkWright cw = getBestSolution(instance, true);
+        System.out.println(cw.getTotalCost());
+
+
+/*
         ClarkWright pcw = new ParallelClarkWright(instance);
 
 
-
-
-        if(!pcw.checkValidity()){
+        if (!pcw.checkValidity()) {
             System.out.println("Errore sovraccarico rotte CW");
 
-        }else {
+        } else {
             System.out.println(pcw.getFinalRoutes());
             double initGain = pcw.getTotalCost();
             System.out.println(initGain);
 
             BestExchange.doBestExchanges(pcw);
-            if(pcw.checkValidity()){
+            if (pcw.checkValidity()) {
                 double endGain = pcw.getTotalCost();
                 System.out.println(endGain);
 
                 System.out.println(pcw.getFinalRoutes());
 
                 System.out.println("Guadagno da Exchange:" + (initGain - endGain));
-            }else{
+            } else {
                 System.out.println(pcw.getFinalRoutes());
             }
 
@@ -49,15 +57,13 @@ public class Main {
 
         double initGain = pcw.getTotalCost();
         BestRelocate.doBestRelocatesNew(pcw);
-        if(pcw.checkValidity()){
+        if (pcw.checkValidity()) {
             double endGain = pcw.getTotalCost();
             System.out.println("Guadagno da Relocate:" + (initGain - endGain));
             System.out.println(pcw.getTotalCost());
-        }else{
+        } else {
             System.out.println(pcw.getFinalRoutes());
         }
-
-
 
 
         //BestRelocate.doBestRelocates(pcw);
@@ -92,6 +98,36 @@ public class Main {
             break;
         }
 */
+    }
+
+    private static ClarkWright getBestSolution(Instance instance, boolean parallel) {
+
+        ClarkWright bestSolution = null;
+        double bestCost = Integer.MAX_VALUE;
+
+        long startTime = System.currentTimeMillis();
+
+        for (int i = 0; i < ITERATIONS; i++) {
+            ClarkWright cw;
+
+            if(parallel)
+               cw = new ParallelClarkWright(instance);
+            else
+                cw = new SequentialClarkWright(instance);
+
+            BestExchange.doBestExchanges(cw);
+            BestRelocate.doBestRelocatesNew(cw);
+
+            if (cw.getTotalCost() < bestCost){
+                bestCost = cw.getTotalCost();
+                bestSolution = cw;
+            }
+        }
+
+        if(BENCHMARK)
+            System.out.println("Total execution time: " + (System.currentTimeMillis()-startTime)/1000.0);
+
+        return bestSolution;
     }
 
 
