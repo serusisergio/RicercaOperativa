@@ -22,10 +22,17 @@ public class Main {
         FileManager fileManager = new FileManager();
 
 
-        Instance instance = fileManager.readInstance("A1.txt");
+        Instance instance = fileManager.readInstance("N4.txt");
 
         ClarkWright cw = getBestSolution(instance, true);
-        System.out.println(cw.getTotalCost());
+        double ourBestSolution =cw.getTotalCost();
+        double literatureBestSolution = cw.getInstance().getBestSolution();
+
+        System.out.println("Our Best Solution        : "+ourBestSolution);
+        System.out.println("Literature Best Solution : "+literatureBestSolution);
+        System.out.println("Relative %               : "+((ourBestSolution/literatureBestSolution)*100-100));
+
+
 
 
 /*
