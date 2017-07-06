@@ -39,7 +39,16 @@ public class BestExchange {
             currentDelta = 0;
         }
         //se è la scelta migliore
-        if (bestChoice == null && currentDelta < 0 || bestChoice.getValue() > currentDelta) {
+        if (bestChoice == null) {
+            if (currentDelta < 0) {
+                //bestChoice = new Choice(a, b, posA, posB, routeB, currentDelta);
+                bestChoice = new Choice(routeA, routeB, a, b, currentDelta);
+
+            }
+        } else if (bestChoice.getValue() > currentDelta) {
+            //System.out.println("CurrenteDelta : "+currentDelta);
+            //System.out.println("CurrenteValue : "+bestChoice.getValue());
+            //bestChoice = new Choice(a, b, posA, posB, routeB, currentDelta);
             bestChoice = new Choice(routeA, routeB, a, b, currentDelta);
         }
 
