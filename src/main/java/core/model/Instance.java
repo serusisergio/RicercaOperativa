@@ -16,14 +16,16 @@ public class Instance {
     private WarehouseNode warehouseNode;
     private String nameInstance  = "";
     private ArrayList<Node> nodesList;
+    private double bestSolution = 0;
 
-    public Instance(int vehiclesCapacity, int numberCustomers, int numberVehicles, WarehouseNode warehouseNode, String nameInstance, ArrayList<Node> nodesList){
+    public Instance(int vehiclesCapacity, int numberCustomers, int numberVehicles, WarehouseNode warehouseNode, String nameInstance, ArrayList<Node> nodesList, double bestSolution){
         setVehiclesCapacity(vehiclesCapacity);
         setNumberCustomers(numberCustomers);
         setNumberVehicles(numberVehicles);
         setWarehouseNode(warehouseNode);
         setNameInstance(nameInstance);
         setNodesList(nodesList);
+        setBestSolution(bestSolution);
     }
 
     public int getVehiclesCapacity() {
@@ -72,5 +74,13 @@ public class Instance {
 
     protected void setNodesList(ArrayList<Node> nodesList) {
         this.nodesList = nodesList;
+    }
+
+    public double getBestSolution() {
+        return bestSolution;
+    }
+
+    public void setBestSolution(double bestSolution) {
+        this.bestSolution = bestSolution;
     }
 }
