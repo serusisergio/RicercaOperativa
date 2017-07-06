@@ -10,43 +10,27 @@ public class Choice {
     private Node firstNode;
     private Node secondNode;
     private double value;
-    private Route routeToChange;
-    private int positionRouteA;
-    private int positionRouteB;
-    private int positionNodeB;
+    private int positionSecondNode;
+    private Route firstRoute;
+    private Route secondRoute;
 
 
-    public Choice(Node a, Node b, Route r, double value){
-        setFirstNode(a);
-        setSecondNode(b);
-        setValue(value);
-        setRouteToChange(r);
+    //Used in relocate
+    public Choice(Route firstRoute, Route secondRoute, Node firstNode, int positionSecondNode, double value) {
+        this.firstRoute = firstRoute;
+        this.secondRoute = secondRoute;
+        this.firstNode = firstNode;
+        this.positionSecondNode = positionSecondNode;
+        this.value = value;
     }
 
-    public Choice(Node a, int positionA, Route r, double value){
-        setFirstNode(a);
-        this.positionRouteA = positionA;
-        setValue(value);
-        setRouteToChange(r);
-    }
-
-    public Choice(Node a, Node b,int positionA,int positionB, Route r, double value){
-        setFirstNode(a);
-        setSecondNode(b);
-        setValue(value);
-        setRouteToChange(r);
-        this.positionRouteA = positionA;
-        this.setPositionRouteB(positionB);
-    }
-
-    public Choice(Node a, Node b,int positionA,int positionB,int positionNodeB, Route r, double value){
-        setFirstNode(a);
-        setSecondNode(b);
-        setValue(value);
-        setRouteToChange(r);
-        this.positionRouteA = positionA;
-        this.setPositionRouteB(positionB);
-        this.setPositionNodeB(positionNodeB);
+    //Used in exchange
+    public Choice(Route firstRoute, Route secondRoute, Node firstNode, Node secondNode, double value) {
+        this.firstRoute = firstRoute;
+        this.secondRoute = secondRoute;
+        this.firstNode = firstNode;
+        this.secondNode = secondNode;
+        this.value = value;
     }
 
 
@@ -54,61 +38,39 @@ public class Choice {
         return firstNode;
     }
 
-    public void setFirstNode(Node firstNode) {
-        this.firstNode = firstNode;
-    }
 
     public Node getSecondNode() {
         return secondNode;
     }
 
-    public void setSecondNode(Node secondNode) {
-        this.secondNode = secondNode;
-    }
 
     public double getValue() {
         return value;
     }
 
-    public void setValue(double value) {
-        this.value = value;
-    }
-
-    public Route getRouteToChange() {
-        return routeToChange;
-    }
-
-    public void setRouteToChange(Route routeToChange) {
-        this.routeToChange = routeToChange;
-    }
-
-    public int getPositionRouteA() {
-        return positionRouteA;
-    }
-
     @Override
-    public String toString(){
+    public String toString() {
         String toSt = new String();
-        toSt+="    FirstNode: "+firstNode;
-        toSt+=("   SecondNode: "+secondNode);
-        toSt+=("   Value: "+value);
-        toSt+=("   RouteToChange: "+routeToChange);
+        toSt += "FirstNode: " + firstNode;
+        toSt += "SecondNode: " + secondNode;
+        toSt += "Value: " + value;
+        toSt += "FirstRoute: " + firstRoute;
+        toSt += "SecondRoute: " + secondRoute;
         return toSt;
     }
 
-    public int getPositionRouteB() {
-        return positionRouteB;
+
+    public int getPositionSecondNode() {
+        return positionSecondNode;
     }
 
-    public void setPositionRouteB(int positionRouteB) {
-        this.positionRouteB = positionRouteB;
+
+    public Route getFirstRoute() {
+        return firstRoute;
     }
 
-    public int getPositionNodeB() {
-        return positionNodeB;
+    public Route getSecondRoute() {
+        return secondRoute;
     }
 
-    public void setPositionNodeB(int positionNodeB) {
-        this.positionNodeB = positionNodeB;
-    }
 }

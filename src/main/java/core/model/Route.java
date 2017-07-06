@@ -21,9 +21,6 @@ public class Route {
     private List<Node> route = new ArrayList<>();
     private DistanceMatrix distances;
 
-    public Route() {
-    }
-
     public Route(Node warehouse, Node node, DistanceMatrix distances, int vehicleCapacity) {
         this.distances = distances;
         this.vehicleCapacity = vehicleCapacity;
@@ -85,9 +82,6 @@ public class Route {
         this.lhLoad += r.lhLoad;
     }
 
-    public void mergeStart(Route r) {
-
-    }
 
     public List<Node> getRoute() {
         return route;
@@ -123,14 +117,6 @@ public class Route {
 
     public int getLHLoad() {
         return lhLoad;
-    }
-
-    public List<Node> getLHNodes() {
-        return this.route.stream().filter(a -> a instanceof DeliveryNode).collect(Collectors.toList());
-    }
-
-    public List<Node> getBHNodes() {
-        return this.route.stream().filter(a -> a instanceof PickupNode).collect(Collectors.toList());
     }
 
     public double getExchangeDelta(Node exitingNode, Node enteringNode) {
@@ -251,6 +237,7 @@ public class Route {
 
         if(enteringNode instanceof DeliveryNode){
             lhLoad += ((DeliveryNode) enteringNode).getDelivery();
+
         } else if (enteringNode instanceof PickupNode){
             bhLoad += ((PickupNode) enteringNode).getPickup();
         }

@@ -13,48 +13,50 @@ public class BestExchange {
 
     private static final double EPSILON = 0.01;
 
-    private static Choice checkExchange(Route routeA, Route routeB,int posA,int posB, Node a, Node b, Choice bestChoice) {
-        //System.out.println("RouteA:"+routeA);
-        //System.out.println("RouteB:"+routeB);
+    private static Choice checkExchange(Route routeA, Route routeB, int posA, int posB, Node a, Node b, Choice bestChoice) {
+
         double currentDelta;
-        if(routeA!=routeB){ //da controllare
+        if (routeA != routeB) { //da controllare
             currentDelta = routeA.getExchangeDelta(a, b) + routeB.getExchangeDelta(b, a);
 
-        }else{
+        } else {
             //System.out.println("Stessa ROTTA, PoA: "+posA+"   PoB: "+posB);
-            int pA=0;
-            int pB=0;
+            int pA = 0;
+            int pB = 0;
             pA = routeA.getRoute().indexOf(a);
             pB = routeA.getRoute().indexOf(b);
             //System.out.println("Stessa ROTTA, PoA: "+pA+"   PoB: "+pB);
-            if((pA-pB)==1 || (pA-pB)==-1){//Controllare posizione nodo a e nodo b
+            if ((pA - pB) == 1 || (pA - pB) == -1) {//Controllare posizione nodo a e nodo b
                 //System.out.println("CheckExchange- Consecutivi");
                 currentDelta = routeA.getExchangeDelta(a, b);
                 //System.out.println("CurrenteDelta : "+currentDelta);
-            }else{
+            } else {
                 currentDelta = routeA.getExchangeDelta(a, b) + routeA.getExchangeDelta(b, a);
             }
 
         }
-        if(currentDelta<0 && currentDelta>-EPSILON){
-            currentDelta=0;
+        if (currentDelta < 0 && currentDelta > -EPSILON) {
+            currentDelta = 0;
         }
         //se è la scelta migliore
         if (bestChoice == null) {
             if (currentDelta < 0) {
-                bestChoice = new Choice(a, b,posA,posB, routeB, currentDelta);
+                //bestChoice = new Choice(a, b, posA, posB, routeB, currentDelta);
+                bestChoice = new Choice(routeA, routeB, a, b, currentDelta);
+
             }
         } else if (bestChoice.getValue() > currentDelta) {
             //System.out.println("CurrenteDelta : "+currentDelta);
             //System.out.println("CurrenteValue : "+bestChoice.getValue());
-            bestChoice = new Choice(a, b,posA,posB, routeB, currentDelta);
+            //bestChoice = new Choice(a, b, posA, posB, routeB, currentDelta);
+            bestChoice = new Choice(routeA, routeB, a, b, currentDelta);
         }
 
         return bestChoice;
     }
 
 
-    public static void doBestExchanges(ClarkWright cr){
+    public static void doBestExchanges(ClarkWright cr) {
         List<Route> finalRoutes = cr.getFinalRoutes();
         Choice bestChoice = null;
         do {
@@ -75,57 +77,41 @@ public class BestExchange {
                         int y;
                         if (routeA == routeB) {
                             //se la rotta è la stessa
-                            y=j+1;
+                            y = j + 1;
                         } else {
                             //se la rotta e' diversa guarda tutti i nodi
-                            y=0;
+                            y = 0;
                         }
 
                         for (; y < nodeRouteB.size(); y++) {
                             Node nodeB = nodeRouteB.get(y);
-                            if (nodeA instanceof DeliveryNode) {
-                                if (nodeB instanceof DeliveryNode) {
-                                    bestChoice = checkExchange(routeA, routeB,i,x, nodeA, nodeB, bestChoice);
-                                }
-                            } else {
-                                if (nodeA instanceof PickupNode) {
-                                    if (nodeB instanceof PickupNode) {
-                                        bestChoice = checkExchange(routeA, routeB,i,x, nodeA, nodeB, bestChoice);
-                                    }
-                                }
+
+                            //scarta le combinazioni con nodi di tipo diverso
+                            if (nodeA instanceof DeliveryNode && nodeB instanceof DeliveryNode || nodeA instanceof PickupNode && nodeB instanceof PickupNode) {
+                                bestChoice = checkExchange(routeA, routeB, i, x, nodeA, nodeB, bestChoice);
                             }
+
                         }
                     }
                 }
             }
             if (bestChoice != null) { //Fai lo scambio
-                //System.out.println("Scambiando: "+bestChoice);
-                Route routeAchange = finalRoutes.get(bestChoice.getPositionRouteA());
-                Route routeBchange = finalRoutes.get(bestChoice.getPositionRouteB());
+                Route routeAchange = bestChoice.getFirstRoute();
+                Route routeBchange = bestChoice.getSecondRoute();
 
-                if(bestChoice.getPositionRouteA()==bestChoice.getPositionRouteB()){
-                    routeAchange.exchangeContiguousNodes(bestChoice.getFirstNode(),bestChoice.getSecondNode());
-                    finalRoutes.set(bestChoice.getPositionRouteA(),routeAchange);
+                if (bestChoice.getFirstRoute() == bestChoice.getSecondRoute()) {
+                    routeAchange.exchangeContiguousNodes(bestChoice.getFirstNode(), bestChoice.getSecondNode());
+                    finalRoutes.set(finalRoutes.indexOf(bestChoice.getFirstRoute()), routeAchange);
 
-                }else{
-                    //System.out.println("Scambiando: "+bestChoice);
+                } else {
+                    routeAchange.exchangeNodes(bestChoice.getFirstNode(), bestChoice.getSecondNode());
+                    routeBchange.exchangeNodes(bestChoice.getSecondNode(), bestChoice.getFirstNode());
 
-                    routeAchange.exchangeNodes(bestChoice.getFirstNode(),bestChoice.getSecondNode());
-                    //System.out.println("Routeeee: "+routeAchange);
-                    //checkValidity(routeAchange,cr);
-
-                    routeBchange.exchangeNodes(bestChoice.getSecondNode(),bestChoice.getFirstNode());
-                    //checkValidity(routeBchange,cr);
-
-                    finalRoutes.set(bestChoice.getPositionRouteA(),routeAchange);
-                    finalRoutes.set(bestChoice.getPositionRouteB(),routeBchange);
                 }
 
 
-
             }
-        }while(bestChoice != null);
-        cr.setFinalRoutes(finalRoutes);
+        } while (bestChoice != null);
 
     }
 

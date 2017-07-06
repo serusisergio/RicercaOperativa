@@ -15,7 +15,7 @@ import com.google.common.collect.*;
  */
 public class SavingsMatrix {
 
-    private final double OFFSET = 0.07;
+    private final double OFFSET = 0.01;
 
     private List<Node> nodes;
     private WarehouseNode warehouseNode;
