@@ -1,8 +1,5 @@
 package core.model;
 
-import core.model.Node;
-import core.model.WarehouseNode;
-
 import java.util.ArrayList;
 
 
@@ -14,16 +11,16 @@ public class Instance {
     private int numberCustomers = 0;
     private int numberVehicles = 0;
     private WarehouseNode warehouseNode;
-    private String nameInstance = "";
+    private String instanceName = "";
     private ArrayList<Node> nodesList;
     private double bestSolution = 0;
 
-    public Instance(int vehiclesCapacity, int numberCustomers, int numberVehicles, WarehouseNode warehouseNode, String nameInstance, ArrayList<Node> nodesList, double bestSolution) {
+    public Instance(int vehiclesCapacity, int numberCustomers, int numberVehicles, WarehouseNode warehouseNode, String instanceName, ArrayList<Node> nodesList, double bestSolution) {
         setVehiclesCapacity(vehiclesCapacity);
         setNumberCustomers(numberCustomers);
         setNumberVehicles(numberVehicles);
         setWarehouseNode(warehouseNode);
-        setNameInstance(nameInstance);
+        setInstanceName(instanceName);
         setNodesList(nodesList);
         setBestSolution(bestSolution);
     }
@@ -60,12 +57,12 @@ public class Instance {
         this.warehouseNode = warehouseNode;
     }
 
-    public String getNameInstance() {
-        return nameInstance;
+    public String getInstanceName() {
+        return instanceName;
     }
 
-    protected void setNameInstance(String nameInstance) {
-        this.nameInstance = nameInstance;
+    protected void setInstanceName(String instanceName) {
+        this.instanceName = instanceName;
     }
 
     public ArrayList<Node> getNodesList() {

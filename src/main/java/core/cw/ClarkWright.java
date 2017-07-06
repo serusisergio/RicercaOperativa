@@ -3,6 +3,10 @@ package core.cw;
 import core.model.*;
 import javafx.util.Pair;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +18,7 @@ public abstract  class ClarkWright {
     protected List<Route> bhRoutes, lhRoutes, finalRoutes;
     protected DistanceMatrix distances;
     protected SavingsMatrix savings;
+    private double time;
 
     public ClarkWright(Instance i) {
         this.setInstance(i);
@@ -105,7 +110,7 @@ public abstract  class ClarkWright {
     public String getSolutionDetail() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("Text File with Solution Of Problem: ").append(getInstance().getNameInstance());
+        sb.append("Text File with Solution Of Problem: ").append(getInstance().getInstanceName());
 
         sb.append("\n\nPROBLEM DETAILS");
         sb.append("\nCustomers = ").append(getInstance().getNumberCustomers());
@@ -215,5 +220,27 @@ public abstract  class ClarkWright {
 
     public double getSolutionMargin(){
         return  getTotalCost() / instance.getBestSolution() * 100 - 100;
+    }
+
+    public void saveToFile(String fileName){
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(new File(fileName)))) {
+            bw.write(getSolutionDetail());
+            bw.newLine();
+            bw.newLine();
+            bw.write("Total execution time = " + time);
+            bw.newLine();
+            bw.newLine();
+            bw.write("Margin from the best known solution = " + getSolutionMargin());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public double getTime() {
+        return time;
+    }
+
+    public void setTime(double time) {
+        this.time = time;
     }
 }
