@@ -216,6 +216,7 @@ public class Route {
         //controlla i carichi
         //se l'inserimento fa superare il carico, restituisci MAX_INT
         //in modo che non sia mai fatto
+
         if (enteringNode instanceof DeliveryNode) {
             DeliveryNode delEnterNode = (DeliveryNode) enteringNode;
 
@@ -244,6 +245,8 @@ public class Route {
         this.route.add(position, enteringNode);
 
     }
+
+
 
 
 }

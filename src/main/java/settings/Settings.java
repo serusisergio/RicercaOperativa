@@ -5,8 +5,8 @@ package settings;
  */
 public class Settings {
 
-    public final String instancesPath = System.getProperty("os.name").contains("Windows") ? "Instances\\" : "Instances/";
-
+    public final String instancesPathWithoutSolution = System.getProperty("os.name").contains("Windows") ? "Instances\\InstancesWithoutSolution\\" : "Instances/InstancesWithoutSolution/";
+    public final String instancesPathWithSolution = System.getProperty("os.name").contains("Windows") ? "Instances\\InstancesWithSolution\\Detailed_Solution_" : "Instances/InstancesWithSolution/Detailed_Solution_";
     public Settings(){
 
     }

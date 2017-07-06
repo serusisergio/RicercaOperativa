@@ -38,7 +38,7 @@ public class FileManager {
 
         try {
             String line;
-            fileReader = new BufferedReader(new FileReader(settings.instancesPath + nameInstance));
+            fileReader = new BufferedReader(new FileReader(settings.instancesPathWithoutSolution + nameInstance));
             int i = 0;
             while ((line = fileReader.readLine()) != null) {
                 //System.out.println(line);
@@ -98,7 +98,8 @@ public class FileManager {
                 e.printStackTrace();
             }
         }
-        return new Instance(capacityVehicles, numberCustomers, numberVehicles, warehouseNode, nameInstance, nodesList);
+        double bestSolution = getBestInstanceSolution(nameInstance);
+        return new Instance(capacityVehicles, numberCustomers, numberVehicles, warehouseNode, nameInstance, nodesList, bestSolution);
     }
 
     //Questo metodo legge tutte le instanza e le carica su un ArrayList, restituendolo al chiamante
@@ -115,7 +116,33 @@ public class FileManager {
      * @return A list contains the names of the instances
      */
     public String[] getListNameInstance() {
-        file = new File(settings.instancesPath);
+        file = new File(settings.instancesPathWithoutSolution);
         return file.list();
     }
+
+    public double getBestInstanceSolution(String nameInstance){
+        double bestSolution = Integer.MAX_VALUE;
+        try {
+            String line;
+            fileReader = new BufferedReader(new FileReader(settings.instancesPathWithSolution + nameInstance));
+            for(int i=0;i<8;i++)fileReader.readLine();
+            line = fileReader.readLine();
+            bestSolution = Double.parseDouble(line.split("Total Cost =")[1]);
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Error in FileReader!");
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fileReader.close();
+            } catch (IOException e) {
+                System.out.println("Error while flushing/closing fileReader!");
+                e.printStackTrace();
+            }
+        }
+        return bestSolution;
+    }
+
 }
