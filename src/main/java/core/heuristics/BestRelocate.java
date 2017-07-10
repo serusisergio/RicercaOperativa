@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class BestRelocate {
 
-    public static void doBestRelocatesNew(ClarkeWright cr) {
+    public static void doBestRelocates(ClarkeWright cr) {
         List<Route> finalRoutes = cr.getFinalRoutes();
         Choice bestChoice = null;
 
