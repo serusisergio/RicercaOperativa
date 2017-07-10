@@ -1,11 +1,8 @@
 package core.cw;
 
 import core.model.Node;
-import javafx.util.Pair;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by saimon on 08/06/17.

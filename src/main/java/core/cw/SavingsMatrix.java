@@ -2,7 +2,6 @@ package core.cw;
 
 import core.model.Node;
 import core.model.WarehouseNode;
-import javafx.util.Pair;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -30,6 +29,7 @@ public class SavingsMatrix {
         this.warehouseNode = warehouseNode;
         this.setDistances(distances);
         computeMatrix();
+        computeSavings();
     }
 
     private void computeMatrix() {

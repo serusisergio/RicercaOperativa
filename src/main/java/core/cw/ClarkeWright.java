@@ -1,7 +1,6 @@
 package core.cw;
 
 import core.model.*;
-import javafx.util.Pair;
 
 import java.io.BufferedWriter;
 import java.io.File;

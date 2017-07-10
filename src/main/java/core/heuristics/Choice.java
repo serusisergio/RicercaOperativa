@@ -4,13 +4,9 @@ import core.model.Node;
 import core.model.Route;
 
 /**
- * Created by Sergio Serusi on 21/06/2017.
+ * Questa classe viene utilizzata per salvare la scelta migliore fino al momento
  */
 public class Choice {
-    /*
-    * Questa classe viene utilizzata per salvare la scelta migliore fino al momento
-     */
-
 
     private Node firstNode;         //Conterra il Nodo da spostare (nel caso di exchange verra scambiato con il secondo nodo)
     private Node secondNode;        //Conterra il Nodo da spostare (nel caso di exchange verra scambiato con il primo nodo)
@@ -21,17 +17,14 @@ public class Choice {
 
 
     /**
-     * Used in relocate
+     * Questo costruttore viene utilizzato per salvare la migliore scelta con Relocate. Infatti, salviamo first route che contiene
+     * il nodo da spostare, second route è la route in cui inserire first node nella posizione "positionSecondNode". Value contiene
+     * il che si ottiene con la mossa
      * @param firstRoute
      * @param secondRoute
      * @param firstNode
      * @param positionSecondNode
      * @param value
-     */
-    /*
-    * Questo costruttore viene utilizzato per salvare la migliore scelta con Relocate. Infatti, salviamo first route che contiene
-    * il nodo da spostare, second route è la route in cui inserire first node nella posizione "positionSecondNode". Value contiene
-     * il che si ottiene con la mossa
      */
     public Choice(Route firstRoute, Route secondRoute, Node firstNode, int positionSecondNode, double value) {
         this.firstRoute = firstRoute;
@@ -42,17 +35,14 @@ public class Choice {
     }
 
     /**
-     * Used in exchange
+     * Questo costruttore viene utilizzato per salvare la migliore scelta con exchange. Infatti, salviamo first route che contiene
+     * first node che verra inserito al posto di second node nella second route, e verrà sostituito da second node della second route
+     * Value contiene il guadagno che si ottiene dalla mossa
      * @param firstRoute
      * @param secondRoute
      * @param firstNode
      * @param secondNode
      * @param value
-     */
-/*
-    * Questo costruttore viene utilizzato per salvare la migliore scelta con exchange. Infatti, salviamo first route che contiene
-    * first node che verra inserito al posto di second node nella second route, e verrà sostituito da second node della second route
-    * Value contiene il guadagno che si ottiene dalla mossa
      */
     public Choice(Route firstRoute, Route secondRoute, Node firstNode, Node secondNode, double value) {
         this.firstRoute = firstRoute;

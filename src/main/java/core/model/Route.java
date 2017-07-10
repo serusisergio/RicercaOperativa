@@ -21,6 +21,14 @@ public class Route {
     private List<Node> route = new ArrayList<>();
     private DistanceMatrix distances;
 
+    /**
+     * Creazione iniziale della rotta. La rotta va dal warehouse al nodo nel parametro e torna al warehouse
+     *
+     * @param warehouse
+     * @param node
+     * @param distances
+     * @param vehicleCapacity
+     */
     public Route(Node warehouse, Node node, DistanceMatrix distances, int vehicleCapacity) {
         this.distances = distances;
         this.vehicleCapacity = vehicleCapacity;
@@ -39,6 +47,11 @@ public class Route {
         }
     }
 
+    /**
+     * Unisce due rotte, attaccando quella in parametro alla fine di quella corrente
+     *
+     * @param r
+     */
     public void mergeEnd(Route r) {
 
         //check if the merge is allowed
@@ -49,7 +62,7 @@ public class Route {
             throw new LoadExceededException();
 
 
-        //taglia le rotte
+        //togli i warehouse dalle rotte
         Node last = this.route.remove(this.route.size() - 1);
         if (!(last instanceof WarehouseNode))
             throw new RuntimeException("Rotta che non finisce in warehouse!");
@@ -119,10 +132,18 @@ public class Route {
         return lhLoad;
     }
 
+    /**
+     * Calcola il delta del costo della rotta, ottenuto togliendo il primo nodo e
+     * inserendo al suo posto il secondo. Se lo scambio non e' ammissibile per
+     * il superamento del carico, il delta e' MAX_INT (mai conveniente)
+     *
+     * @param exitingNode
+     * @param enteringNode
+     * @return
+     */
     public double getExchangeDelta(Node exitingNode, Node enteringNode) {
 
         int exitingPosition = this.route.indexOf(exitingNode);
-        //System.out.println("Position "+exitingPosition+"   Existin:"+exitingNode);
 
         Node pred = this.route.get(exitingPosition - 1);
         Node succ = this.route.get(exitingPosition + 1);
@@ -135,7 +156,7 @@ public class Route {
                 DeliveryNode delExitNode = (DeliveryNode) exitingNode;
                 DeliveryNode delEnterNode = (DeliveryNode) enteringNode;
 
-                if (lhLoad - delExitNode.getDelivery() + delEnterNode.getDelivery() > vehicleCapacity){
+                if (lhLoad - delExitNode.getDelivery() + delEnterNode.getDelivery() > vehicleCapacity) {
                     return Integer.MAX_VALUE;
                 }
             } else {
@@ -150,35 +171,52 @@ public class Route {
                     + distances.getDistance(pred, enteringNode) + distances.getDistance(enteringNode, succ);
         } else {
             Node otherSucc = this.route.get(exitingPosition + 2);
-            double val= - distances.getDistance(pred, exitingNode) - distances.getDistance(exitingNode, enteringNode) - distances.getDistance(enteringNode, otherSucc)
+            double val = -distances.getDistance(pred, exitingNode) - distances.getDistance(exitingNode, enteringNode) - distances.getDistance(enteringNode, otherSucc)
                     + distances.getDistance(pred, enteringNode) + distances.getDistance(enteringNode, exitingNode) + distances.getDistance(exitingNode, otherSucc);
-            //System.out.println("Val:"+val);
+
             return val;
         }
 
     }
 
 
+    /**
+     * Fai lo scambio tra due nodi, togliendo il nodo uscente e inserendo il nodo entrante.
+     * Non vale per nodi contigui.
+     * @param exitingNode
+     * @param enteringNode
+     */
     public void exchangeNodes(Node exitingNode, Node enteringNode) {
+        double delta = getExchangeDelta(exitingNode, enteringNode);
 
-        this.totalDistance += getExchangeDelta(exitingNode, enteringNode);
+        if (delta == Integer.MAX_VALUE)
+            throw new RuntimeException("Tentativo non valido di scambiare " + exitingNode + " con " + enteringNode + " in rotta " + this);
 
-        if(exitingNode instanceof DeliveryNode){
+        this.totalDistance += delta;
+
+        //aggiorno i carichi
+        if (exitingNode instanceof DeliveryNode) {
             lhLoad -= ((DeliveryNode) exitingNode).getDelivery();
             lhLoad += ((DeliveryNode) enteringNode).getDelivery();
-        } else if (exitingNode instanceof PickupNode){
+        } else if (exitingNode instanceof PickupNode) {
             bhLoad -= ((PickupNode) exitingNode).getPickup();
             bhLoad += ((PickupNode) enteringNode).getPickup();
         }
 
+        //tolgo il nodo uscente e metto quello entrante
         int exitingPosition = this.route.indexOf(exitingNode);
-
         this.route.set(exitingPosition, enteringNode);
     }
 
+    /**
+     * Fai lo scambio tra nodi contigui.
+     * @param exitingNode
+     * @param enteringNode
+     */
     public void exchangeContiguousNodes(Node exitingNode, Node enteringNode) {
+        double delta = getExchangeDelta(exitingNode, enteringNode);
 
-        this.totalDistance += getExchangeDelta(exitingNode, enteringNode);
+        this.totalDistance += delta;
 
         int aPosition = route.indexOf(exitingNode);
         int bPosition = route.indexOf(enteringNode);
@@ -187,6 +225,11 @@ public class Route {
         route.set(bPosition, exitingNode);
     }
 
+    /**
+     * Calcola il delta del costo ottenuto togliendo un nodo dalla rotta
+     * @param exitingNode
+     * @return
+     */
     public double getNodeRemovalDelta(Node exitingNode) {
         int exitingPosition = this.route.indexOf(exitingNode);
 
@@ -197,17 +240,28 @@ public class Route {
                 + distances.getDistance(pred, succ);
     }
 
-    public void removeNode(Node exitingNode) { //Aggioranre i carichi
+    /**
+     * Toglie un nodo dalla rotta e aggiorna il carico
+     * @param exitingNode
+     */
+    public void removeNode(Node exitingNode) {
+        //Aggiora i carichi
         this.totalDistance += getNodeRemovalDelta(exitingNode);
-        if(exitingNode instanceof DeliveryNode){
+        if (exitingNode instanceof DeliveryNode) {
             lhLoad -= ((DeliveryNode) exitingNode).getDelivery();
-        } else if (exitingNode instanceof PickupNode){
+        } else if (exitingNode instanceof PickupNode) {
             bhLoad -= ((PickupNode) exitingNode).getPickup();
         }
 
         this.route.remove(exitingNode);
     }
 
+    /**
+     * Calcola il delta del costo ottenuto inserendo un nodo nella rotta
+     * @param enteringNode
+     * @param position
+     * @return
+     */
     public double getNodeInsertionDelta(Node enteringNode, int position) {
 
         Node pred = this.route.get(position - 1);
@@ -233,20 +287,34 @@ public class Route {
         return -distances.getDistance(pred, succ) + distances.getDistance(pred, enteringNode) + distances.getDistance(enteringNode, succ);
     }
 
+    /**
+     * Inserisci un nodo alla posizione passata
+     * @param enteringNode
+     * @param position
+     */
     public void insertNode(Node enteringNode, int position) {
-        this.totalDistance += getNodeInsertionDelta(enteringNode, position); //forse va messo -
+        double delta = getNodeInsertionDelta(enteringNode, position);
 
-        if(enteringNode instanceof DeliveryNode){
+        if (delta == Integer.MAX_VALUE)
+            throw new RuntimeException("Tentativo non valido di inseire " + enteringNode + " nella posizione " + position + " in rotta " + this);
+
+        this.totalDistance += delta;
+
+        if (enteringNode instanceof DeliveryNode) {
             lhLoad += ((DeliveryNode) enteringNode).getDelivery();
 
-        } else if (enteringNode instanceof PickupNode){
+        } else if (enteringNode instanceof PickupNode) {
             bhLoad += ((PickupNode) enteringNode).getPickup();
         }
         this.route.add(position, enteringNode);
 
     }
 
-    public List<Node> getLHList(){
+    /**
+     * Restituisce la parte linehaul della rotta
+     * @return
+     */
+    public List<Node> getLHList() {
         return route.stream().filter(n -> n instanceof DeliveryNode).collect(Collectors.toList());
     }
 

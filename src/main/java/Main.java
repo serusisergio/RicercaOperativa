@@ -61,18 +61,12 @@ public class Main {
 
             if (parallel) {
                 cw = new ParallelClarkeWright(instance);
-                cw.checkValidity();
                 BestRelocate.doBestRelocatesNew(cw);
-                cw.checkValidity();
                 BestExchange.doBestExchanges(cw);
-                cw.checkValidity();
             } else {
                 cw = new SequentialClarkeWright(instance);
-                cw.checkValidity();
                 BestExchange.doBestExchanges(cw);
-                cw.checkValidity();
                 BestRelocate.doBestRelocatesNew(cw);
-                cw.checkValidity();
             }
 
 
