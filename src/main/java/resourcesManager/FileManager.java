@@ -12,6 +12,9 @@ import core.model.*;
  * Created by Sergio Serusi on 07/06/2017.
  */
 public class FileManager {
+    /*
+    * Questa classe si occupa di gestire i file, in lettura e scrittura
+     */
     private FileWriter fileWriter;
     private BufferedReader fileReader;
     private String SPLIT;
@@ -26,7 +29,11 @@ public class FileManager {
     }
 
 
-    //Questo metodo legge la singola instanza nameInstance
+    /**
+    * Questo metodo legge la singola instanza nameInstance
+    *@param nameInstance Contiene il node dell'istanza da leggere
+     *@return Instance contenente creata leggendo il file nameInstance
+     */
     public Instance readInstance(String nameInstance) {
         ArrayList<Node> nodesList = new ArrayList<>();
         int numberCustomers = 0;
@@ -46,7 +53,7 @@ public class FileManager {
                 int pickup = 0;
 
                 switch (i) {
-                    case 0:
+                    case 0://la riga 0 contiene il numero dei clieti
                         numberCustomers = Integer.parseInt(line);
                         //System.out.println("NumeroClienti: "+numberCustomers);
                         break;
@@ -54,7 +61,7 @@ public class FileManager {
                     case 1: // Nella riga 1 è indicato il numero dei depositi, non ci serve
                         break;
 
-                    case 2:
+                    case 2:// la riga 2 contiene il numero di veicoli
                         numberVehicles = Integer.parseInt(line);
                         //System.out.println("Numeroveicoli: "+numberVehicles);
                         break;
@@ -68,7 +75,7 @@ public class FileManager {
                         //System.out.println("X:"+warehouseNode.getX()+"   Y:"+warehouseNode.getY()+"   CapacitàVeicolo:");
                         break;
 
-                    default:
+                    default://tutte le altre righe
                         String[] colCustomer = line.split(SPLIT);
                         x = Integer.parseInt(colCustomer[0]);
                         y = Integer.parseInt(colCustomer[1]);
@@ -118,6 +125,11 @@ public class FileManager {
         return file.list();
     }
 
+    /**
+     * Questo metodo riceve in ingresso il nome della istanza e restituisce la best solution o best known
+     * @param nameInstance
+     * @return
+     */
     public double getBestInstanceSolution(String nameInstance){
         double bestSolution = Integer.MAX_VALUE;
         try {
