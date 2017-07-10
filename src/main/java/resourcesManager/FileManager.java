@@ -16,7 +16,6 @@ public class FileManager {
     private BufferedReader fileReader;
     private String SPLIT;
     private File file;
-    private Settings settings;
 
 
     public FileManager() {
@@ -24,7 +23,6 @@ public class FileManager {
         fileWriter = null;
         file = null;
         SPLIT = "   ";//il file è formattato con 3 tab
-        settings = new Settings();
     }
 
 
@@ -38,7 +36,7 @@ public class FileManager {
 
         try {
             String line;
-            fileReader = new BufferedReader(new FileReader(settings.instancesPathWithoutSolution + nameInstance));
+            fileReader = new BufferedReader(new FileReader(Settings.instancesPathWithoutSolution + nameInstance));
             int i = 0;
             while ((line = fileReader.readLine()) != null) {
                 //System.out.println(line);
@@ -116,7 +114,7 @@ public class FileManager {
      * @return A list contains the names of the instances
      */
     public String[] getListNameInstance() {
-        file = new File(settings.instancesPathWithoutSolution);
+        file = new File(Settings.instancesPathWithoutSolution);
         return file.list();
     }
 
@@ -124,7 +122,7 @@ public class FileManager {
         double bestSolution = Integer.MAX_VALUE;
         try {
             String line;
-            fileReader = new BufferedReader(new FileReader(settings.instancesPathWithSolution + nameInstance));
+            fileReader = new BufferedReader(new FileReader(Settings.instancesPathWithSolution + nameInstance));
             for(int i=0;i<8;i++)fileReader.readLine();
             line = fileReader.readLine();
             bestSolution = Double.parseDouble(line.split("Total Cost =")[1]);

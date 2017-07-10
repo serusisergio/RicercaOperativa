@@ -8,6 +8,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.*;
+import settings.Settings;
 
 
 /**
@@ -15,23 +16,23 @@ import com.google.common.collect.*;
  */
 public class SavingsMatrix {
 
-    private final double OFFSET = 0.01;
 
     private List<Node> nodes;
     private WarehouseNode warehouseNode;
     private DistanceMatrix distances;
 
     private Map<Pair<Node, Node>, Double> savings = new HashMap<>();
+    private List<Pair<Node, Node>> shuffledSavings;
 
 
     public SavingsMatrix(List<Node> nodes, WarehouseNode warehouseNode, DistanceMatrix distances) {
         this.nodes = nodes;
         this.warehouseNode = warehouseNode;
         this.setDistances(distances);
-        calculateMatrix();
+        computeMatrix();
     }
 
-    private void calculateMatrix() {
+    private void computeMatrix() {
 
         for (int i = 0; i < nodes.size(); i++) {
             for (int j = 0; j < nodes.size(); j++) {
@@ -47,20 +48,31 @@ public class SavingsMatrix {
         }
     }
 
-    public List<Pair<Node, Node>> getSortedSaving() {
-        List<Pair<Node, Node>> ordered = getSavings().entrySet()
+    private void computeSavings() {
+        //ottendo la lista dei savings ordinata
+        List<Pair<Node, Node>> sortedSavings = getSavings().entrySet()
                 .stream()
                 .sorted(Map.Entry.comparingByValue(Collections.reverseOrder()))
                 .map(pair -> pair.getKey())
                 .collect(Collectors.toList());
 
-        List<List<Pair<Node, Node>>> partitions = Lists.partition(ordered, (int) (ordered.size() * OFFSET));
+        //divido la lista in partizioni di lunghezza dipendente dal parametro SHUFFLE_OFFSET
+        List<List<Pair<Node, Node>>> partitions = Lists.partition(sortedSavings, (int) (sortedSavings.size() * Settings.SHUFFLE_OFFSET));
 
-        partitions.forEach(partition ->  Collections.shuffle(partition));
+        //mischio in modo casuale le partizioni
+        partitions.forEach(partition -> Collections.shuffle(partition));
 
-        return partitions.stream().flatMap(List::stream)
+        //unisco le partizioni in un'unica lista
+        shuffledSavings = partitions.stream().flatMap(List::stream)
                 .collect(Collectors.toList());
+    }
 
+    /**
+     * Metodo che restituisce i savings "circa" ordinati
+     * il disordine dipende dal parametro SHUFFLE_OFFSET
+     */
+    public List<Pair<Node, Node>> getSortedSavings() {
+        return shuffledSavings;
     }
 
     public DistanceMatrix getDistances() {

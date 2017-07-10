@@ -10,17 +10,21 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by stefano on 15/06/17.
+
+/** Superclasse astratta delle euristiche Clark&Wright.
+ * Contiene i metodi comuni ad entrame le versioni (unione delle rotte, controlli,
+ * stampa a video e su file).
+ * Le sottoclassi devono implementare i metodi astratti solveLH (creazione delle rotte di linehaul)
+ * e solveBH (crezione delle rotte di backhaul)
  */
-public abstract  class ClarkWright {
+public abstract  class ClarkeWright {
     private Instance instance;
     protected List<Route> bhRoutes, lhRoutes, finalRoutes;
     protected DistanceMatrix distances;
     protected SavingsMatrix savings;
     private double time;
 
-    public ClarkWright(Instance i) {
+    public ClarkeWright(Instance i) {
         this.setInstance(i);
 
         distances = new DistanceMatrix(getInstance().getNodesList(), getInstance().getWarehouseNode());
@@ -30,9 +34,12 @@ public abstract  class ClarkWright {
         lhRoutes = new ArrayList<>();
         finalRoutes = new ArrayList<>();
 
+        //algoritmo vero e proprio
+        //prima vengono create le rotte di backhaul, poi quelle di linehaul
         solveBH();
         solveLH();
 
+        //infine i due tipi di rotte sono uniti, dove possibile
         mergeLhBh();
     }
 
@@ -40,12 +47,16 @@ public abstract  class ClarkWright {
     protected abstract void solveLH();
 
 
+    /**
+     * Unisce rotte di linehaul con rotte di backhaul,
+     * utilizzando i savings per fare prima i merge piu' covenienti
+     */
     private void mergeLhBh() {
 
         finalRoutes.addAll(lhRoutes);
         finalRoutes.addAll(bhRoutes);
 
-        savings.getSortedSaving().forEach(pair -> {
+        savings.getSortedSavings().forEach(pair -> {
             Node iNode = pair.getKey();
             Node jNode = pair.getValue();
 
@@ -54,8 +65,6 @@ public abstract  class ClarkWright {
             }
         });
 
-        //System.out.println("FINAL ROUTES");
-        //System.out.println(finalRoutes);
     }
 
     protected void mergeLeft(Pair<Node, Node> pair, List<Route> routes) {

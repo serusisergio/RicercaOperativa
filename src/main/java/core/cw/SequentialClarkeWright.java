@@ -9,9 +9,9 @@ import java.util.stream.Collectors;
 /**
  * Created by stefano on 12/06/17.
  */
-public class SequentialClarkWright extends ClarkWright {
+public class SequentialClarkeWright extends ClarkeWright {
 
-    public SequentialClarkWright(Instance i) {
+    public SequentialClarkeWright(Instance i) {
         super(i);
     }
 
@@ -29,7 +29,7 @@ public class SequentialClarkWright extends ClarkWright {
 
         List<Route> temp = new ArrayList<>(bhRoutes);
         bhRoutes.forEach(route ->
-                savings.getSortedSaving().forEach(pair  -> {
+                savings.getSortedSavings().forEach(pair  -> {
                     mergeRight(pair, temp);
                     mergeLeft(pair, temp);
                 })
@@ -52,7 +52,7 @@ public class SequentialClarkWright extends ClarkWright {
 
         List<Route> temp = new ArrayList<>(lhRoutes);
         lhRoutes.forEach(route ->
-            savings.getSortedSaving().forEach(pair -> {
+            savings.getSortedSavings().forEach(pair -> {
                 if (temp.size() > bhRoutes.size() && temp.size() > getInstance().getNumberVehicles()) {
                     mergeRight(pair, temp);
                     mergeLeft(pair, temp);

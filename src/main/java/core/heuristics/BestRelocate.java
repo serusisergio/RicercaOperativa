@@ -1,7 +1,8 @@
 package core.heuristics;
 
-import core.cw.ClarkWright;
+import core.cw.ClarkeWright;
 import core.model.*;
+import settings.Settings;
 
 import java.util.List;
 
@@ -10,12 +11,13 @@ import java.util.List;
  */
 public class BestRelocate {
 
-    private static final double EPSILON = 0.01;
-
-
-    public static void doBestRelocatesNew(ClarkWright cr) {
+    public static void doBestRelocatesNew(ClarkeWright cr) {
         List<Route> finalRoutes = cr.getFinalRoutes();
         Choice bestChoice = null;
+
+        //controllo se ci sono scambi da fare
+        //il ciclo termina quando ho controllato tutti gli scambi possibili
+        //e non ne ho fatto nemmeno uno
         do {
             bestChoice = null;
             for (int i = 0; i < finalRoutes.size(); i++) {
@@ -28,6 +30,7 @@ public class BestRelocate {
                     //non faccio relocate di nodi delivery se la parte linehaul della rotta ha un solo nodo,
                     //altrimenti potrebbero rimanere rotte con solo backhaul
                     if (nodeA instanceof DeliveryNode && routeA.getLHList().size() > 1 || nodeA instanceof PickupNode) {
+
                         //non faccio relocate sulla stessa rotta
                         //parto dalla rotta successiva, poi riparto dall'inizio della lista (col modulo)
                         //mi fermo quando ritorno alla rotta di partenza
@@ -65,7 +68,7 @@ public class BestRelocate {
     private static Choice checkRelocate(Route routeA, Route routeB, Node a, int position, Choice bestChoice) {
         double currentDelta = routeA.getNodeRemovalDelta(a) + routeB.getNodeInsertionDelta(a, position);
 
-        if (currentDelta < 0 && currentDelta > -EPSILON) {
+        if (currentDelta < 0 && currentDelta > -Settings.EPSILON) {
             currentDelta = 0;
         }
         //se è la scelta migliore

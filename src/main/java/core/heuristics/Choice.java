@@ -15,7 +15,14 @@ public class Choice {
     private Route secondRoute;
 
 
-    //Used in relocate
+    /**
+     * Used in relocate
+     * @param firstRoute
+     * @param secondRoute
+     * @param firstNode
+     * @param positionSecondNode
+     * @param value
+     */
     public Choice(Route firstRoute, Route secondRoute, Node firstNode, int positionSecondNode, double value) {
         this.firstRoute = firstRoute;
         this.secondRoute = secondRoute;
@@ -24,7 +31,14 @@ public class Choice {
         this.value = value;
     }
 
-    //Used in exchange
+    /**
+     * Used in exchange
+     * @param firstRoute
+     * @param secondRoute
+     * @param firstNode
+     * @param secondNode
+     * @param value
+     */
     public Choice(Route firstRoute, Route secondRoute, Node firstNode, Node secondNode, double value) {
         this.firstRoute = firstRoute;
         this.secondRoute = secondRoute;

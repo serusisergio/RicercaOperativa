@@ -1,9 +1,9 @@
 package core.heuristics;
 
 import core.model.*;
-import core.cw.ClarkWright;
+import core.cw.ClarkeWright;
+import settings.Settings;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,54 +11,13 @@ import java.util.List;
  */
 public class BestExchange {
 
-    private static final double EPSILON = 0.01;
-
-    private static Choice checkExchange(Route routeA, Route routeB, int posA, int posB, Node a, Node b, Choice bestChoice) {
-
-        double currentDelta;
-        if (routeA != routeB) { //da controllare
-            currentDelta = routeA.getExchangeDelta(a, b) + routeB.getExchangeDelta(b, a);
-
-        } else {
-            //System.out.println("Stessa ROTTA, PoA: "+posA+"   PoB: "+posB);
-            int pA = 0;
-            int pB = 0;
-            pA = routeA.getRoute().indexOf(a);
-            pB = routeA.getRoute().indexOf(b);
-            //System.out.println("Stessa ROTTA, PoA: "+pA+"   PoB: "+pB);
-            if ((pA - pB) == 1 || (pA - pB) == -1) {//Controllare posizione nodo a e nodo b
-                //System.out.println("CheckExchange- Consecutivi");
-                currentDelta = routeA.getExchangeDelta(a, b);
-                //System.out.println("CurrenteDelta : "+currentDelta);
-            } else {
-                currentDelta = routeA.getExchangeDelta(a, b) + routeA.getExchangeDelta(b, a);
-            }
-
-        }
-        if (currentDelta < 0 && currentDelta > -EPSILON) {
-            currentDelta = 0;
-        }
-        //se è la scelta migliore
-        if (bestChoice == null) {
-            if (currentDelta < 0) {
-                //bestChoice = new Choice(a, b, posA, posB, routeB, currentDelta);
-                bestChoice = new Choice(routeA, routeB, a, b, currentDelta);
-
-            }
-        } else if (bestChoice.getValue() > currentDelta) {
-            //System.out.println("CurrenteDelta : "+currentDelta);
-            //System.out.println("CurrenteValue : "+bestChoice.getValue());
-            //bestChoice = new Choice(a, b, posA, posB, routeB, currentDelta);
-            bestChoice = new Choice(routeA, routeB, a, b, currentDelta);
-        }
-
-        return bestChoice;
-    }
-
-
-    public static void doBestExchanges(ClarkWright cr) {
+    public static void doBestExchanges(ClarkeWright cr) {
         List<Route> finalRoutes = cr.getFinalRoutes();
         Choice bestChoice = null;
+
+        //controllo se ci sono scambi da fare
+        //il ciclo termina quando ho controllato tutti gli scambi possibili
+        //e non ne ho fatto nemmeno uno
         do {
             bestChoice = null;
             for (int i = 0; i < finalRoutes.size(); i++) {
@@ -113,6 +72,51 @@ public class BestExchange {
             }
         } while (bestChoice != null);
 
+    }
+
+
+    private static Choice checkExchange(Route routeA, Route routeB, int posA, int posB, Node a, Node b, Choice bestChoice) {
+
+        double currentDelta;
+
+        if (routeA != routeB) {
+            //se le rotte sono diverse il delta e' la somma dei delta delle rotte
+            currentDelta = routeA.getExchangeDelta(a, b) + routeB.getExchangeDelta(b, a);
+
+        } else {
+            //se la rotta e' la stessa
+            int pA = routeA.getRoute().indexOf(a);
+            int pB = routeA.getRoute().indexOf(b);
+
+            //se i nodi sono contigui
+            if (Math.abs(pA - pB) == 1) {
+
+                //il delta e' da calcolare una sola volta
+                currentDelta = routeA.getExchangeDelta(a, b);
+            } else {
+
+                //se non lo sono, il calcolo e' uguale al caso di rotte diverse
+                //(a parte per l'uso della stessa rotta
+                currentDelta = routeA.getExchangeDelta(a, b) + routeA.getExchangeDelta(b, a);
+            }
+
+        }
+
+        if (currentDelta < 0 && currentDelta > -Settings.EPSILON) {
+            currentDelta = 0;
+        }
+
+        //se è la scelta migliore
+        if (bestChoice == null) {
+            if (currentDelta < 0) {
+                bestChoice = new Choice(routeA, routeB, a, b, currentDelta);
+
+            }
+        } else if (bestChoice.getValue() > currentDelta) {
+            bestChoice = new Choice(routeA, routeB, a, b, currentDelta);
+        }
+
+        return bestChoice;
     }
 
 }

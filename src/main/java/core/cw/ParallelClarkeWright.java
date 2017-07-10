@@ -8,9 +8,9 @@ import java.util.stream.Collectors;
 /**
  * Created by stefano on 12/06/17.
  */
-public class ParallelClarkWright extends ClarkWright {
+public class ParallelClarkeWright extends ClarkeWright {
 
-    public ParallelClarkWright(Instance i) {
+    public ParallelClarkeWright(Instance i) {
         super(i);
     }
 
@@ -25,7 +25,7 @@ public class ParallelClarkWright extends ClarkWright {
             lhRoutes.add(r);
         }
 
-        savings.getSortedSaving().forEach(pair -> {
+        savings.getSortedSavings().forEach(pair -> {
             if (lhRoutes.size() > bhRoutes.size() && lhRoutes.size() > getInstance().getNumberVehicles()) {
                 mergeRight(pair, lhRoutes);
             }
@@ -43,7 +43,7 @@ public class ParallelClarkWright extends ClarkWright {
             bhRoutes.add(r);
         }
 
-        savings.getSortedSaving().forEach(pair -> mergeRight(pair, bhRoutes));
+        savings.getSortedSavings().forEach(pair -> mergeRight(pair, bhRoutes));
     }
 
 

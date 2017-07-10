@@ -1,10 +1,10 @@
-import core.cw.ParallelClarkWright;
-import core.cw.SequentialClarkWright;
+import core.cw.ParallelClarkeWright;
+import core.cw.SequentialClarkeWright;
 import core.heuristics.BestExchange;
 import core.heuristics.BestRelocate;
 import core.model.*;
 import resourcesManager.FileManager;
-import core.cw.ClarkWright;
+import core.cw.ClarkeWright;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -31,10 +31,10 @@ public class Main {
 
                 System.out.println("Current instance: " + instance.getInstanceName());
 
-                ClarkWright pcw = getBestSolution(instance, true);
+                ClarkeWright pcw = getBestSolution(instance, true);
                 pcw.saveToFile("solutions/parallel/" + instance.getInstanceName());
 
-                ClarkWright scw = getBestSolution(instance, false);
+                ClarkeWright scw = getBestSolution(instance, false);
                 scw.saveToFile("solutions/sequential/" + instance.getInstanceName());
 
                 String name = instance.getInstanceName().replace(".txt", "");
@@ -49,24 +49,30 @@ public class Main {
         return name + ", " + parallelDiff + ", " + parallelTime + ", " + sequentialDiff + ", " + sequentialTime + "\n";
     }
 
-    private static ClarkWright getBestSolution(Instance instance, boolean parallel) {
+    private static ClarkeWright getBestSolution(Instance instance, boolean parallel) {
 
-        ClarkWright bestSolution = null;
+        ClarkeWright bestSolution = null;
         double bestCost = Integer.MAX_VALUE;
 
         long startTime = System.currentTimeMillis();
 
         for (int i = 0; i < ITERATIONS; i++) {
-            ClarkWright cw;
+            ClarkeWright cw;
 
             if (parallel) {
-                cw = new ParallelClarkWright(instance);
+                cw = new ParallelClarkeWright(instance);
+                cw.checkValidity();
                 BestRelocate.doBestRelocatesNew(cw);
+                cw.checkValidity();
                 BestExchange.doBestExchanges(cw);
+                cw.checkValidity();
             } else {
-                cw = new SequentialClarkWright(instance);
+                cw = new SequentialClarkeWright(instance);
+                cw.checkValidity();
                 BestExchange.doBestExchanges(cw);
+                cw.checkValidity();
                 BestRelocate.doBestRelocatesNew(cw);
+                cw.checkValidity();
             }
 
 
